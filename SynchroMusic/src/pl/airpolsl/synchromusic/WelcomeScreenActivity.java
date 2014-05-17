@@ -1,9 +1,9 @@
 package pl.airpolsl.synchromusic;
 
 import pl.airpolsl.synchromusic.util.SystemUiHider;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -111,7 +111,9 @@ public class WelcomeScreenActivity extends Activity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        
+        
     }
 
     @Override
@@ -148,6 +150,18 @@ public class WelcomeScreenActivity extends Activity {
         }
     };
 
+    @Override
+    protected void onResume()
+    {
+    	super.onResume();
+    	new Handler().postDelayed(new Runnable() {
+        	@Override
+        	public void run(){
+        		startActivity(new Intent(WelcomeScreenActivity.this,RulesApprovalActivity.class));
+        	}
+
+        }, 3000);
+    }
     /**
      * Schedules a call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.

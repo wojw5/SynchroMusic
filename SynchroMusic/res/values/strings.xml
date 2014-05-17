@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <string name="app_name">Synchro Music</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">Synchro\nMusic</string>
-
+    <string name="title_activity_rules_approval">RulesApprovalActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="welcome_largeText">Welcome in your new favourite app!</string>
+	<string name="welcome_textView">Before yoy will start please accept the rures. After that Quick Settings View will be opened.</string>
+	<string name="rolesAcceptance">I am accepting the rules</string>
+	<string name="save">Save</string>
 </resources>
