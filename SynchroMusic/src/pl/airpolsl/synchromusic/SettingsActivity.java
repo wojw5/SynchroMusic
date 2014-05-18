@@ -16,7 +16,9 @@ public class SettingsActivity extends Activity {
 	
 	public void goToMainMenu(View view)
 	{
-		startActivity( new Intent(this,MainMenuActivity.class));
+		Intent intent = new Intent(this,MainMenuActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		startActivity(intent);
 		finish();
 	}
 }

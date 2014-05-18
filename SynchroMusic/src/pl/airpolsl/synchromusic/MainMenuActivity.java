@@ -2,7 +2,9 @@ package pl.airpolsl.synchromusic;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 
 public class MainMenuActivity extends Activity {
@@ -18,4 +20,8 @@ public class MainMenuActivity extends Activity {
 		startActivity( new Intent(this,ServerMainActivity.class));
 	}
 	
+	public void goToSettings(View view)
+	{
+		startActivity( new Intent(this,SettingsActivity.class));
+	}
 }
