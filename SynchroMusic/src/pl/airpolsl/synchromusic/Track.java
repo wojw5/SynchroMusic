@@ -1,20 +1,26 @@
 package pl.airpolsl.synchromusic;
 
+import android.net.Uri;
+
 public class Track {
 	private String title;
 	private String artist;
 	private String genere;
-	private String length;
+	private Long length;
 	private String streamerName;
 	private Boolean played = false;
+	private Uri uri;
+	public enum Priority {
+	    Now, High, Normal, Low
+	}
 	
 	
-	public Track(String nTitle, String nArtist, String nlength, String nStreamerName)
+	public Track(String nTitle, String nArtist, Long nlength, Uri nUri)
 	{
 		title=nTitle;
 		artist=nArtist;
 		length=nlength;
-		streamerName=nStreamerName;
+		uri=nUri;
 	}
 	
 	public String getTitle()
@@ -26,9 +32,18 @@ public class Track {
 		return artist;
 	}
 	
-	public String getLength()
+	public Long getLength()
 	{
 		return length;
+	}
+	
+	public String getTime()
+	{
+		String sLength = length/60 + ":";
+	    int sec = (int) (length%60);
+	    if(sec<10) sLength+="0";
+	    sLength+=sec;
+	    return sLength;
 	}
 	
 }

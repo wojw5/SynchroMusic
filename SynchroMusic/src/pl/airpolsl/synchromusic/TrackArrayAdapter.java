@@ -29,7 +29,7 @@ public class TrackArrayAdapter extends ArrayAdapter<Track> {
     TextView time = (TextView) rowView.findViewById(R.id.time_textView);
     title.setText(tracks.get(position).getTitle());
     artist.setText(tracks.get(position).getArtist());
-    time.setText(tracks.get(position).getLength());
+    time.setText(tracks.get(position).getTime());
     
     return rowView;
   }
