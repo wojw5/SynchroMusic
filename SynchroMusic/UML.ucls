@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.6" icons="true" automaticImage="PNG" always-add-relationships="true" generalizations="true" 
+  realizations="true" associations="false" dependencies="true" nesting-relationships="true">  
+  <class id="1" language="java" name="pl.airpolsl.synchromusic.WelcomeScreenActivity" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/WelcomeScreenActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="160" x="885" y="194"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="pl.airpolsl.synchromusic.TracksListFragment" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/TracksListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="252" x="1259" y="369"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="pl.airpolsl.synchromusic.Track" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/Track.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="163" x="1259" y="701"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="4" language="java" name="pl.airpolsl.synchromusic.Track.Priority" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/Track.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="119" x="1259" y="894"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="5" language="java" name="pl.airpolsl.synchromusic.SimpleSettingsFragment" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/SimpleSettingsFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="164" x="1592" y="369"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="pl.airpolsl.synchromusic.SettingsActivity" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/SettingsActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="154" x="41" y="194"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="pl.airpolsl.synchromusic.SerwerPlayerButtonsFragment" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/SerwerPlayerButtonsFragment.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="99" width="293" x="1963" y="194"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="pl.airpolsl.synchromusic.ServerMainActivity" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/ServerMainActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="208" x="235" y="194"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="pl.airpolsl.synchromusic.RulesApprovalActivity" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/RulesApprovalActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="177" x="483" y="194"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="pl.airpolsl.synchromusic.MainMenuActivity" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/MainMenuActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="145" x="700" y="194"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="pl.airpolsl.synchromusic.TrackArrayAdapter" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/TrackArrayAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="224" x="1014" y="562"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="android.app.Activity" project="SynchroMusic" 
+    file="C:/ANDROID/sdk/platforms/android-19/android.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="116" width="406" x="572" y="37"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="false" private="false" static="false"/>      
+      <operations public="true" package="true" protected="true" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="android.app.ListFragment" project="SynchroMusic" 
+    file="C:/ANDROID/sdk/platforms/android-19/android.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="115" width="293" x="1259" y="194"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="android.app.Fragment" project="SynchroMusic" 
+    file="C:/ANDROID/sdk/platforms/android-19/android.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="117" width="339" x="1592" y="37"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="android.preference.PreferenceFragment" project="SynchroMusic" 
+    file="C:/ANDROID/sdk/platforms/android-19/android.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="114" width="331" x="1592" y="194"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="android.widget.ArrayAdapter" project="SynchroMusic" 
+    file="C:/ANDROID/sdk/platforms/android-19/android.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="115" width="355" x="864" y="369"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="pl.airpolsl.synchromusic.ClientMainActivity" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/ClientMainActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="134" x="1085" y="194"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="18">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="19" name="adapter"/>      
+      <multiplicity id="20" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="21">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="23">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="24">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="25">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="26">    
+    <bendpoint x="1268" y="562"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="27" name="tracks"/>      
+      <multiplicity id="28" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="29">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="30" name="tracks"/>      
+      <multiplicity id="31" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="32">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <generalization id="33">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="13"/>  
+  </generalization>  
+  <generalization id="34">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="35">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="36">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <generalization id="37">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="38">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <nesting id="39">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="4"/>  
+  </nesting>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="false" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

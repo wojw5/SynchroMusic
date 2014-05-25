@@ -39,8 +39,9 @@ public class Track {
 	
 	public String getTime()
 	{
-		String sLength = length/60 + ":";
-	    int sec = (int) (length%60);
+		long tLength = length/1000;
+		String sLength = tLength/60 + ":";
+	    int sec = (int) (tLength%60);
 	    if(sec<10) sLength+="0";
 	    sLength+=sec;
 	    return sLength;

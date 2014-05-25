@@ -40,5 +40,6 @@ public boolean onCreateOptionsMenu(Menu menu) {
     inflater.inflate(R.menu.main_activity_actions, menu);
     return super.onCreateOptionsMenu(menu);
 }</string>
+    <string name="title_activity_client_main">ClientMainActivity</string>
 
 </resources>

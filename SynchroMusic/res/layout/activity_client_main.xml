@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${packageName}.${activityClass}" >
+
+    <fragment
+        android:id="@+id/fragment2"
+        android:name="pl.airpolsl.synchromusic.TracksListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <ImageButton
+        android:id="@+id/playPause_imageButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_media_play"
+        android:text="@string/play_pause" />
+
+</LinearLayout>
