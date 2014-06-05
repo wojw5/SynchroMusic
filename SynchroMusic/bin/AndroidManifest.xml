@@ -3,17 +3,19 @@
     package="pl.airpolsl.synchromusic"
     android:versionCode="1"
     android:versionName="1.0" >
-	<uses-permission
-        android:required="true"
-        android:name="android.permission.ACCESS_WIFI_STATE"/>
+
     <uses-permission
-        android:required="true"
-        android:name="android.permission.CHANGE_WIFI_STATE"/>
+        android:name="android.permission.ACCESS_WIFI_STATE"
+        android:required="true" />
     <uses-permission
-        android:required="true"
-        android:name="android.permission.INTERNET"/>
+        android:name="android.permission.CHANGE_WIFI_STATE"
+        android:required="true" />
+    <uses-permission
+        android:name="android.permission.INTERNET"
+        android:required="true" />
+
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
 
     <application
@@ -52,6 +54,17 @@
             android:name="pl.airpolsl.synchromusic.ClientMainActivity"
             android:label="@string/title_activity_client_main" >
         </activity>
+
+        <receiver
+            android:name="pl.airpolsl.synchromusic.ServerBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
+        <receiver
+            android:name="pl.airpolsl.synchromusic.ClientBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" >
+        </receiver>
     </application>
 
 </manifest>

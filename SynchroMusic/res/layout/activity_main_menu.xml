@@ -29,7 +29,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:text="@string/start_client" />
+        android:text="@string/start_client"
+        android:onClick="goToClient" />
 
     <Button
         android:id="@+id/button3"

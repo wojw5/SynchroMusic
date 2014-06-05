@@ -18,6 +18,11 @@ public class MainMenuActivity extends Activity {
 		startActivity( new Intent(this,ServerMainActivity.class));
 	}
 	
+	public void goToClient(View view)
+	{
+		startActivity( new Intent(this,ClientMainActivity.class));
+	}
+	
 	public void goToSettings(View view)
 	{
 		startActivity( new Intent(this,SettingsActivity.class));
