@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.6" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="true" nesting-relationships="true">  
+  <class id="1" language="java" name="pl.airpolsl.synchromusic.Track" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/Track.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="163" x="1878" y="989"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="pl.airpolsl.synchromusic.SynchroMusicProtocol" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/SynchroMusicProtocol.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="189" width="180" x="1176" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="pl.airpolsl.synchromusic.WelcomeScreenActivity" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/WelcomeScreenActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="160" x="766" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="pl.airpolsl.synchromusic.ServerMainActivity" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/ServerMainActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="208" x="581" y="459"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="pl.airpolsl.synchromusic.PingAnswerPacket" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/PingAnswerPacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="137" x="3216" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="6" language="java" name="pl.airpolsl.synchromusic.Error" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/Error.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="119" x="2532" y="1308"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <interface id="7" language="java" 
+    name="pl.airpolsl.synchromusic.NetworkListFragmentFragment.OnFragmentInteractionListener" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/NetworkListFragmentFragment.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="81" width="202" x="3199" y="266"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="8" language="java" name="pl.airpolsl.synchromusic.Packet" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/Packet.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="163" x="2953" y="266"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="pl.airpolsl.synchromusic.RefuseReceivingPacket" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/RefuseReceivingPacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="186" x="2572" y="989"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="pl.airpolsl.synchromusic.PrepareToReceivePacket" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/PrepareToReceivePacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="181" x="1878" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="pl.airpolsl.synchromusic.TracksListFragment" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/TracksListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="252" x="1838" y="459"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="pl.airpolsl.synchromusic.ConnectionDetails" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/ConnectionDetails.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="202" x="2953" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="pl.airpolsl.synchromusic.PingPacket" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/PingPacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="131" x="3393" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="pl.airpolsl.synchromusic.NetworkListFragmentFragment" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/NetworkListFragmentFragment.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="153" width="234" x="3199" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="pl.airpolsl.synchromusic.ClientBroadcastReceiver" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/ClientBroadcastReceiver.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="359" x="182" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="pl.airpolsl.synchromusic.PacketTCP" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/PacketTCP.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="158" x="2532" y="459"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="pl.airpolsl.synchromusic.WelcomePacket" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/WelcomePacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="133" x="1420" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="pl.airpolsl.synchromusic.User" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/User.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="115" x="1216" y="989"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="19" language="java" name="pl.airpolsl.synchromusic.Track.Priority" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/Track.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="119" x="1878" y="1308"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="20" language="java" name="pl.airpolsl.synchromusic.MainMenuActivity" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/MainMenuActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="145" x="581" y="266"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="pl.airpolsl.synchromusic.Clients" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/Clients.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="172" x="983" y="266"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="pl.airpolsl.synchromusic.GoodByePacket" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/GoodByePacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="164" x="1216" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="pl.airpolsl.synchromusic.ReadyToReceivePacket" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/ReadyToReceivePacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="158" x="2798" y="989"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="pl.airpolsl.synchromusic.ServerBroadcastReceiver" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/ServerBroadcastReceiver.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="373" x="581" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="pl.airpolsl.synchromusic.NetworkArrayAdapter" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/NetworkArrayAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="148" x="41" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="pl.airpolsl.synchromusic.SerwerPlayerButtonsFragment" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/SerwerPlayerButtonsFragment.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="99" width="293" x="229" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="27" language="java" name="pl.airpolsl.synchromusic.ConnectionDetails.SendMode" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/ConnectionDetails.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="133" x="2996" y="989"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="28" language="java" name="pl.airpolsl.synchromusic.StopPlayingPacket" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/StopPlayingPacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="176" x="2316" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="pl.airpolsl.synchromusic.TrackArrayAdapter" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/TrackArrayAdapter.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="224" x="1593" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="pl.airpolsl.synchromusic.DebugPacket" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/DebugPacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="171" width="151" x="2532" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="pl.airpolsl.synchromusic.ClientMainActivity" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/ClientMainActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="186" x="182" y="459"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="pl.airpolsl.synchromusic.SimpleSettingsFragment" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/SimpleSettingsFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="99" width="164" x="562" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="pl.airpolsl.synchromusic.StartPlayingPacket" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/StartPlayingPacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="177" x="2099" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="pl.airpolsl.synchromusic.Client" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/Client.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="116" x="1176" y="1308"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="pl.airpolsl.synchromusic.AnswerToPreparePacket" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/AnswerToPreparePacket.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="169" x="2723" y="778"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="pl.airpolsl.synchromusic.PacketUDP" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/PacketUDP.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="158" x="3176" y="459"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="pl.airpolsl.synchromusic.RulesApprovalActivity" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/RulesApprovalActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="177" x="766" y="266"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="pl.airpolsl.synchromusic.SettingsActivity" project="SynchroMusic" 
+    file="/SynchroMusic/src/pl/airpolsl/synchromusic/SettingsActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="154" x="829" y="459"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="39">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="40" name="error"/>      
+      <multiplicity id="41" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="42">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="43" name="user"/>      
+      <multiplicity id="44" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="45">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="46" name="mListener"/>      
+      <multiplicity id="47" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="48">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <dependency id="49">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="20"/>  
+  </dependency>  
+  <association id="50">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="51" name="sendMode"/>      
+      <multiplicity id="52" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="53">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <generalization id="54">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="36"/>  
+  </generalization>  
+  <association id="55">    
+    <bendpoint x="1089" y="459"/>    
+    <bendpoint x="1089" y="778"/>    
+    <bendpoint x="1089" y="989"/>    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="56" name="clients"/>      
+      <multiplicity id="57" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="58">    
+    <bendpoint x="2541" y="989"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="59" name="error"/>      
+      <multiplicity id="60" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="61">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="35"/>  
+  </generalization>  
+  <generalization id="62">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="35"/>  
+  </generalization>  
+  <dependency id="63">    
+    <bendpoint x="1847" y="778"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="64">    
+    <end type="SOURCE" refId="37"/>    
+    <end type="TARGET" refId="38"/>  
+  </dependency>  
+  <association id="65">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="66" name="mReceiver"/>      
+      <multiplicity id="67" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="68">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="69" name="track"/>      
+      <multiplicity id="70" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="71">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="18"/>  
+  </generalization>  
+  <association id="72">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="73" name="track"/>      
+      <multiplicity id="74" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="75">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="27"/>  
+  </nesting>  
+  <nesting id="76">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="19"/>  
+  </nesting>  
+  <generalization id="77">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="78">    
+    <end type="SOURCE" refId="28"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <dependency id="79">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="38"/>  
+  </dependency>  
+  <association id="80">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="81" name="track"/>      
+      <multiplicity id="82" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="83">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <generalization id="84">    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="85">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="86" name="mActivity"/>      
+      <multiplicity id="87" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="88">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="89">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="90" name="adapter"/>      
+      <multiplicity id="91" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="92">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="93">    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="94">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <association id="95">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="96" name="user"/>      
+      <multiplicity id="97" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="98">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="99">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <dependency id="100">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="101">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="31"/>  
+  </dependency>  
+  <dependency id="102">    
+    <bendpoint x="2922" y="778"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <generalization id="103">    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="104">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="105" name="mReceiver"/>      
+      <multiplicity id="106" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="107">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="108" name="mActivity"/>      
+      <multiplicity id="109" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="110">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="111">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="36"/>  
+  </generalization>  
+  <dependency id="112">    
+    <bendpoint x="1185" y="266"/>    
+    <bendpoint x="1185" y="459"/>    
+    <bendpoint x="1185" y="778"/>    
+    <bendpoint x="1185" y="989"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="34"/>  
+  </dependency>  
+  <dependency id="113">    
+    <bendpoint x="3185" y="778"/>    
+    <end type="SOURCE" refId="36"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <dependency id="114">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="37"/>  
+  </dependency>  
+  <nesting id="115">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="7"/>  
+  </nesting>  
+  <association id="116">    
+    <bendpoint x="2962" y="459"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="117" name="connectionDetails"/>      
+      <multiplicity id="118" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
