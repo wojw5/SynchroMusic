@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<EditTextPreference 
-	    android:title="@string/username"
-	    android:key="pref_username"
-	    android:summary="@string/pref_username_desc"
-	    android:defaultValue=""/>
+    <PreferenceCategory 
+        android:title="@string/pref_user_title"
+        android:key="pref_user_settings">
+		<EditTextPreference 
+		    android:title="@string/username"
+		    android:key="pref_username"
+		    android:summary="@string/pref_username_desc"
+		    android:defaultValue=""/>
+	</PreferenceCategory>
+	
+	<PreferenceCategory 
+        android:title="@string/pref_connection_title"
+        android:key="pref_connection_settings">
+        <ListPreference
+            android:summary="@string/pref_connection_mode_desc"
+	        android:key="pref_connection_mode"
+	        android:title="@string/pref_connection_mode"
+	        android:dialogTitle="@string/pref_connection_mode"
+	        android:entries="@array/pref_connection_modes"
+	        android:entryValues="@array/pref_connection_modes_values"
+	        android:defaultValue="@string/pref_connection_mode_default" />
+    </PreferenceCategory>
 </PreferenceScreen>

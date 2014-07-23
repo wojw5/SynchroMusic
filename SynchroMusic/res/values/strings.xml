@@ -41,4 +41,17 @@
     <string name="wifi_enabled">WiFi enabled</string>
     <string name="title_activity_client_main">ClientMainActivity</string>
 	<string name="availible_servers">Servers</string>
+	<string name="pref_user_title">User</string>
+	<string name="pref_connection_title">Connection</string>
+	<string name="pref_connection_mode">Connection mode</string>
+	<string-array name="pref_connection_modes">
+	    <item>WiFi network</item>
+	    <item>WiFi NSD</item>
+	</string-array>
+	<string-array name="pref_connection_modes_values">
+	    <item>"0"</item>
+	    <item>"1"</item>
+	</string-array>
+	<string name="pref_connection_mode_default">0</string>
+	<string name="pref_connection_mode_desc">How clients will be connected</string>
 </resources>

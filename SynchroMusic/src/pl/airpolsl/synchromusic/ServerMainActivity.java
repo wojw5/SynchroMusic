@@ -1,15 +1,23 @@
 package pl.airpolsl.synchromusic;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.nsd.NsdManager;
+import android.net.nsd.NsdServiceInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +25,8 @@ import android.widget.Toast;
 
 public class ServerMainActivity extends Activity
 {
+	
+	
 	private IntentFilter mIntentFilter;
 	private WifiP2pManager mManager;
 	private WifiP2pManager.Channel mChannel;
@@ -26,23 +36,64 @@ public class ServerMainActivity extends Activity
     public static final String TAG = "SynchroMusicServer";
     public String mServiceName = "SynchroMusic";
 	
+    
+    NsdManager.RegistrationListener mRegistrationListener;
+    NsdManager mNsdManager;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_server_main);
 		
-		mIntentFilter = new IntentFilter();
-	    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-	    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-	    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-	    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		String connectionType = sharedPref.getString("pref_connection_mode", "0");
+		switch (Integer.parseInt(connectionType)) {
+		case 0:
+			ConnectivityManager cm = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+			boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
+			if (!isWiFi) 
+			{
+				Log.d(TAG, "No WiFi Network!");
+            	Toast.makeText(getBaseContext(), "Connect to wifi network first or change settings.", Toast.LENGTH_LONG).show();
+			}
+			else
+			{
+				ServerSocket mServerSocket = null;
+				try {
+					mServerSocket = new ServerSocket(0);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-	    mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
-	    
-	    mChannel = mManager.initialize(this, getMainLooper(), null);
-	    
-	    mReceiver = new ServerBroadcastReceiver(mManager, mChannel, this);
-	    startRegistration();
+			    // Store the chosen port.
+			    int mLocalPort =  mServerSocket.getLocalPort();
+			    initializeRegistrationListener();
+				registerService(mLocalPort);
+			}
+			break;
+			
+			
+		case 1:
+			mIntentFilter = new IntentFilter();
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+
+		    mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
+		    
+		    mChannel = mManager.initialize(this, getMainLooper(), null);
+		    
+		    mReceiver = new ServerBroadcastReceiver(mManager, mChannel, this);
+		    startRegistration();
+			break;
+
+		default:
+			break;
+		}
+		
 	    
 	    
 	}
@@ -51,8 +102,22 @@ public class ServerMainActivity extends Activity
     @Override
     public void onResume() {
         super.onResume();
-        mReceiver = new ServerBroadcastReceiver(mManager, mChannel, this);
-        registerReceiver(mReceiver, mIntentFilter);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		String connectionType = sharedPref.getString("pref_connection_mode", "0");
+		switch (Integer.parseInt(connectionType)) {
+		case 0:
+
+			break;
+			
+			
+		case 1:
+	        mReceiver = new ServerBroadcastReceiver(mManager, mChannel, this);
+	        registerReceiver(mReceiver, mIntentFilter);
+			break;
+
+		default:
+			break;
+		}
     }
 
     @Override
@@ -67,6 +132,52 @@ public class ServerMainActivity extends Activity
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.server_main, menu);
 	    return super.onCreateOptionsMenu(menu);
+	}
+	private void registerService(int port) {
+		// Create the NsdServiceInfo object, and populate it.
+	    NsdServiceInfo serviceInfo  = new NsdServiceInfo();
+
+	    // The name is subject to change based on conflicts
+	    // with other services advertised on the same network.
+	    serviceInfo.setServiceName(mServiceName);
+	    serviceInfo.setServiceType(SERVICE_TYPE);
+	    serviceInfo.setPort(port);
+	    
+	    mNsdManager = (NsdManager) this.getSystemService(Context.NSD_SERVICE);
+
+	    mNsdManager.registerService(
+	            serviceInfo, NsdManager.PROTOCOL_DNS_SD, mRegistrationListener);
+	}
+	
+	public void initializeRegistrationListener() {
+	    mRegistrationListener = new NsdManager.RegistrationListener() {
+
+	        @Override
+	        public void onServiceRegistered(NsdServiceInfo NsdServiceInfo) {
+	            // Save the service name.  Android may have changed it in order to
+	            // resolve a conflict, so update the name you initially requested
+	            // with the name Android actually used.
+	            mServiceName = NsdServiceInfo.getServiceName();
+	            Log.d(TAG, "Service registered as: " + mServiceName);
+	        }
+
+	        @Override
+	        public void onRegistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
+	            // Registration failed!  Put debugging code here to determine why.
+	        	Log.d(TAG, "Registration failed! " + errorCode);
+	        }
+
+	        @Override
+	        public void onServiceUnregistered(NsdServiceInfo arg0) {
+	            // Service has been unregistered.  This only happens when you call
+	            // NsdManager.unregisterService() and pass in this listener.
+	        }
+
+	        @Override
+	        public void onUnregistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
+	            // Unregistration failed.  Put debugging code here to determine why.
+	        }
+	    };
 	}
 	
 	private void startRegistration() {
