@@ -1,7 +1,5 @@
 package pl.airpolsl.synchromusic;
 
-import java.io.IOException;
-import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,8 +7,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.net.wifi.p2p.WifiP2pManager;
@@ -49,31 +45,15 @@ public class ServerMainActivity extends Activity
 		String connectionType = sharedPref.getString("pref_connection_mode", "0");
 		switch (Integer.parseInt(connectionType)) {
 		case 0:
-			ConnectivityManager cm = (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-			boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
-			if (!isWiFi) 
-			{
-				Log.d(TAG, "No WiFi Network!");
-            	Toast.makeText(getBaseContext(), "Connect to wifi network first or change settings.", Toast.LENGTH_LONG).show();
+			NSDWiFi conn = new NSDWiFi(this);
+			try {
+				conn.registerService();
+			} catch (Exception e) {
+				Log.d(TAG, "Cannot register service: " + e.getMessage());
+            	Toast.makeText(getBaseContext(), "Cannot register service: " + e.getMessage(), Toast.LENGTH_LONG).show();
 			}
-			else
-			{
-				ServerSocket mServerSocket = null;
-				try {
-					mServerSocket = new ServerSocket(0);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 
-			    // Store the chosen port.
-			    int mLocalPort =  mServerSocket.getLocalPort();
-			    initializeRegistrationListener();
-				registerService(mLocalPort);
-			}
 			break;
-			
 			
 		case 1:
 			mIntentFilter = new IntentFilter();
@@ -106,7 +86,7 @@ public class ServerMainActivity extends Activity
 		String connectionType = sharedPref.getString("pref_connection_mode", "0");
 		switch (Integer.parseInt(connectionType)) {
 		case 0:
-
+			
 			break;
 			
 			

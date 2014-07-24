@@ -1,11 +1,19 @@
 package pl.airpolsl.synchromusic;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.net.nsd.NsdServiceInfo;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.ActionListener;
@@ -13,12 +21,14 @@ import android.net.wifi.p2p.WifiP2pManager.DnsSdServiceResponseListener;
 import android.net.wifi.p2p.WifiP2pManager.DnsSdTxtRecordListener;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
-public class ClientMainActivity extends Activity {
+public class ClientMainActivity extends Activity{
 
-	
-
+	private NsdServiceInfo selectedService;
+	private List<NsdServiceInfo> availibleServices;
 	private IntentFilter mIntentFilter;
 	private WifiP2pManager mManager;
 	private WifiP2pManager.Channel mChannel;
@@ -34,31 +44,104 @@ public class ClientMainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_client_main);
+		/*SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		String connectionType = sharedPref.getString("pref_connection_mode", "0");
+		switch (Integer.parseInt(connectionType)) {
+		case 0:
+			NSDWiFi conn = new NSDWiFi(this);
+			ProgressDialog progress;
+			progress = ProgressDialog.show(this, "Wait",
+				    "Searching services", true);
+			try {
+				availibleServices = conn.discoverServices();
+			} catch (Exception e) {
+				Log.d(TAG, "Cannot discover service: " + e.getMessage());
+            	Toast.makeText(getBaseContext(), "Cannot discover service: " + e.getMessage(), Toast.LENGTH_LONG).show();
+			}
+			progress.dismiss();
+			if(availibleServices.isEmpty()){
+				Toast.makeText(getBaseContext(), "services not found", Toast.LENGTH_LONG).show();
+			}
+			else {
+				    DialogFragment newFragment = new AvailibleServicesDialogFragment(availibleServices);
+				    newFragment.show(getFragmentManager(), "services");
+				}
+			break;
+			
+			
+		case 1:
+			mIntentFilter = new IntentFilter();
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+		    
+		    mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
+		    
+		    mChannel = mManager.initialize(this, getMainLooper(), null);
+		    
+		    mReceiver = new ClientBroadcastReceiver(mManager, mChannel, this);
+		    discoverService();
+		    break;
 
-		mIntentFilter = new IntentFilter();
-	    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-	    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-	    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-	    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
-	    
-	    mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
-	    
-	    mChannel = mManager.initialize(this, getMainLooper(), null);
-	    
-	    mReceiver = new ClientBroadcastReceiver(mManager, mChannel, this);
-	    discoverService();
+		default:
+			break;
+		}*/
 	}
 	
 	public void onResume() {
         super.onResume();
-        mReceiver = new ClientBroadcastReceiver(mManager, mChannel, this);
-        registerReceiver(mReceiver, mIntentFilter);
+        //mReceiver = new ClientBroadcastReceiver(mManager, mChannel, this);
+        //registerReceiver(mReceiver, mIntentFilter);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		String connectionType = sharedPref.getString("pref_connection_mode", "0");
+		switch (Integer.parseInt(connectionType)) {
+		case 0:
+			NSDWiFi conn = new NSDWiFi(this);
+			ProgressDialog progress;
+			progress = ProgressDialog.show(this, "Wait",
+				    "Searching services", true);
+			try {
+				availibleServices = conn.discoverServices();
+			} catch (Exception e) {
+				Log.d(TAG, "Cannot discover service: " + e.getMessage());
+            	Toast.makeText(getBaseContext(), "Cannot discover service: " + e.getMessage(), Toast.LENGTH_LONG).show();
+			}
+			progress.dismiss();
+			if(availibleServices.isEmpty()){
+				Toast.makeText(getBaseContext(), "services not found", Toast.LENGTH_LONG).show();
+			}
+			else {
+				    DialogFragment newFragment = new AvailibleServicesDialogFragment(availibleServices);
+				    newFragment.show(getFragmentManager(), "services");
+				}
+			break;
+			
+			
+		case 1:
+			mIntentFilter = new IntentFilter();
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+		    
+		    mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
+		    
+		    mChannel = mManager.initialize(this, getMainLooper(), null);
+		    
+		    mReceiver = new ClientBroadcastReceiver(mManager, mChannel, this);
+		    discoverService();
+		    break;
+
+		default:
+			break;
+		}
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        unregisterReceiver(mReceiver);
+        //unregisterReceiver(mReceiver);
     }
     
     
@@ -136,4 +219,40 @@ public class ClientMainActivity extends Activity {
 	            }
 	        });
 	}
+    
+    public void showAvailibleServicesDialog(List<NsdServiceInfo> availibleServices) {
+        // Create an instance of the dialog fragment and show it
+        DialogFragment dialog = new AvailibleServicesDialogFragment(availibleServices);
+        dialog.show(getFragmentManager(), "AvailibleServicesDialogFragment");
+    }
+    
+	public class AvailibleServicesDialogFragment extends DialogFragment {
+		private String[] list;
+		
+		public AvailibleServicesDialogFragment(List<NsdServiceInfo> availibleServices){
+			int length = availibleServices.size();
+			list=new String[length];
+			for(int i=0;i<length;i++){
+				list[i]=availibleServices.get(i).getServiceName();
+			}
+		}
+	    @Override
+	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        // Use the Builder class for convenient dialog construction
+	        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+	        builder.setTitle("Select Service");
+			builder.setItems(list, new DialogInterface.OnClickListener() {
+	               public void onClick(DialogInterface dialog, int which) {
+	                   selectedService=availibleServices.get(which);
+	                   Toast.makeText(getBaseContext(), "choosen: " + selectedService.getServiceName(), Toast.LENGTH_LONG).show();
+	                   //TODO conect to selected
+	               }
+			});
+	        // Create the AlertDialog object and return it
+	        return builder.create();
+	        
+	    }
+	}
+
+    
 }
