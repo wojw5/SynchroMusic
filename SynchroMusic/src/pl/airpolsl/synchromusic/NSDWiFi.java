@@ -13,8 +13,12 @@ import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
+/**
+ * Class implements Connectivity Method as Network service discovery over existing wifi connection.
+ * @author Wojciech Widenka
+ *
+ */
 public class NSDWiFi implements ConnectivityMethod {
 	
 	private NsdManager mNsdManager;
@@ -24,38 +28,46 @@ public class NSDWiFi implements ConnectivityMethod {
 	
 	
 	private Context context;
-	private ServerSocket mServerSocket;
+	private ServerSocket mServerSocket=null;
 	private int mLocalPort;
 	private List<NsdServiceInfo> availibleServices;
 	private NsdServiceInfo resolvedService;
 	
 	private static final String TAG = "NSDWiFi";
 
-    public String mServiceName;
+    private String mServiceName; //TODO check if private is appropriate
 	
-	public NSDWiFi(Context context){
+    /**
+     * Opens socket connection if all conditions are good.
+     * @param context
+     * @throws Exception
+     */
+	public NSDWiFi(Context context) throws Exception{
 		this.context=context;
 	    mNsdManager = (NsdManager) context.getSystemService(Context.NSD_SERVICE);
 	    availibleServices= new ArrayList<NsdServiceInfo>();
 	    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-		String username = sharedPref.getString("pref_username", "anonymous");
+		String username = sharedPref.getString("pref_username", "anonymous"); //TODO String??
 		mServiceName=username;
-	}
-	
-	@Override
-	public void registerService() throws Exception {
 		
-		if(!isConnected(context)) throw new Exception("Not connected");
+		if(!isConnected(context)) throw new Exception("Not connected"); //Throws if there is no existing wifi connection
 
 		mServerSocket = null;
 		try{
 			mServerSocket = new ServerSocket(0);
+			Log.d(TAG,"Server socket created: " + mServerSocket.getInetAddress() +":"+mServerSocket.getLocalPort());
 		}
 		catch (IOException e){
 			throw e;
 		}
+	}
+	
+	/**
+	 * Register Service using NSD (bonjour).
+	 */
+	@Override
+	public void registerService() {
 		
-
 	    // Store the chosen port.
 	    mLocalPort =  mServerSocket.getLocalPort();
 	    
@@ -68,23 +80,32 @@ public class NSDWiFi implements ConnectivityMethod {
 	    serviceInfo.setServiceType(SERVICE_TYPE);
 	    serviceInfo.setPort(mLocalPort);
 	    
-
-	    initializeRegistrationListener();
+	    
+	    initializeRegistrationListener(); // initializes callbacks for registration
 	    
 	    mNsdManager.registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, mRegistrationListener);
 	}
 	
+	/**
+	 * Discovers services availible over existing network
+	 * @return list of found services
+	 */
 	@Override
 	public List<NsdServiceInfo> discoverServices() throws Exception {
 		if(!isConnected(context)) throw new Exception("Not connected");
-		initializeDiscoveryListener();
-		initializeResolveListener();
+		initializeDiscoveryListener(); //initializes callbacks for service discovery
+		initializeResolveListener(); //initializes callbacks for service resolving
 		mNsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, mDiscoveryListener);
-		Thread.sleep(2000);
+		Thread.sleep(4000); //TODO sleep is baaad, timer?
 		mNsdManager.stopServiceDiscovery(mDiscoveryListener);
 		return availibleServices;
 	}
 	
+	/**
+	 * Check if device is currently connected to wifi network.
+	 * @param context
+	 * @return
+	 */
 	private static boolean isConnected(Context context) {
 	    ConnectivityManager connectivityManager = (ConnectivityManager)
 	        context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -111,7 +132,7 @@ public class NSDWiFi implements ConnectivityMethod {
 	        @Override
 	        public void onRegistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
 	            // Registration failed!  Put debugging code here to determine why.
-	        	Log.d(TAG, "Registration failed! " + errorCode);
+	        	Log.d(TAG, "Registration failed! " + errorCode); //TODO inform user, back to main menu.
 	        }
 
 	        @Override
@@ -156,8 +177,11 @@ public class NSDWiFi implements ConnectivityMethod {
 	            	
 	                Log.d(TAG, "Same machine: " + mServiceName);
 	            } else {
-	                mNsdManager.resolveService(service, mResolveListener);
-	                availibleServices.add(service);
+	            	for (NsdServiceInfo item : availibleServices) //important cause sometimes same service is found few times. that cousing problems
+	            	{
+	            		if (item.getServiceName()==service.getServiceName()) return;
+	            	}
+		                mNsdManager.resolveService(service, mResolveListener); //if not exist get detailed data (IP, port)
 	            }
 	        }
 
@@ -170,7 +194,7 @@ public class NSDWiFi implements ConnectivityMethod {
 
 	        @Override
 	        public void onDiscoveryStopped(String serviceType) {
-	            Log.i(TAG, "Discovery stopped: " + serviceType);
+	            Log.d(TAG, "Discovery stopped: " + serviceType);
 	        }
 
 	        @Override
@@ -182,7 +206,7 @@ public class NSDWiFi implements ConnectivityMethod {
 	        @Override
 	        public void onStopDiscoveryFailed(String serviceType, int errorCode) {
 	            Log.e(TAG, "Discovery failed: Error code:" + errorCode);
-	            mNsdManager.stopServiceDiscovery(this);
+	            mNsdManager.stopServiceDiscovery(this); // TODO can be looped sometimes?
 	        }
 	    };
 	}
@@ -193,24 +217,54 @@ public class NSDWiFi implements ConnectivityMethod {
 	        @Override
 	        public void onResolveFailed(NsdServiceInfo serviceInfo, int errorCode) {
 	            // Called when the resolve fails.  Use the error code to debug.
-	            Log.e(TAG, "Resolve failed" + errorCode);
+	            Log.e(TAG, "Resolve failed " + errorCode);
 	        }
 
 	        @Override
 	        public void onServiceResolved(NsdServiceInfo serviceInfo) {
-	            Log.e(TAG, "Resolve Succeeded. " + serviceInfo);
+	            Log.d(TAG, "Resolve Succeeded. :  " + serviceInfo.getServiceName() + " " + serviceInfo.getHost() + ":" + serviceInfo.getPort());
 
 	            if (serviceInfo.getServiceName().equals(mServiceName)) {
 	                Log.d(TAG, "Same IP.");
 	                return;
 	            }
+	            
 	            resolvedService = serviceInfo;
+
+                availibleServices.add(resolvedService);
 	        }
 	    };
 	}
 	
+	/**
+	 * Turn off NDS service.
+	 */
 	public void tearDown() {
         mNsdManager.unregisterService(mRegistrationListener);
         mNsdManager.stopServiceDiscovery(mDiscoveryListener);
     }
+
+	@Override
+	public void resumeServer() {
+		try {
+			registerService();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void pauseServer() {
+		mNsdManager.unregisterService(mRegistrationListener);
+		
+	}
+
+	@Override
+	public ServerSocket getServerSocket() {
+		return mServerSocket;
+	}
+	
+	
 }

@@ -25,6 +25,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+/**
+ * Main Activity for SynchroMusic as client.
+ *
+ */
 public class ClientMainActivity extends Activity{
 
 	private NsdServiceInfo selectedService;
@@ -37,6 +41,8 @@ public class ClientMainActivity extends Activity{
 	public static final String SERVICE_TYPE = "_synchromusic._tcp.";
     public static final String TAG = "SynchroMusicClient";
     public String mServiceName = "SynchroMusic";
+    ConnectionHandler connectionHandler;
+    ConnectivityMethod conn;
     
     final HashMap<String, String> buddies = new HashMap<String, String>();
     
@@ -91,34 +97,39 @@ public class ClientMainActivity extends Activity{
 	
 	public void onResume() {
         super.onResume();
-        //mReceiver = new ClientBroadcastReceiver(mManager, mChannel, this);
+        //mReceiver = new ClientBroadcastReceiver(mManager, mChannel, this); TODO delete?
         //registerReceiver(mReceiver, mIntentFilter);
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-		String connectionType = sharedPref.getString("pref_connection_mode", "0");
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this); //get preferences
+		String connectionType = sharedPref.getString("pref_connection_mode", "0");			//get connection type
 		switch (Integer.parseInt(connectionType)) {
-		case 0:
-			NSDWiFi conn = new NSDWiFi(this);
-			ProgressDialog progress;
+		case 0: // Network service discovery over existing wifi connection
+			try {
+				conn = new NSDWiFi(this);
+			} catch (Exception e1) {
+				Log.d(TAG,e1.getMessage());
+				e1.printStackTrace();
+			}
+			ProgressDialog progress; // TODO would be nice if working ;/
 			progress = ProgressDialog.show(this, "Wait",
 				    "Searching services", true);
 			try {
 				availibleServices = conn.discoverServices();
 			} catch (Exception e) {
 				Log.d(TAG, "Cannot discover service: " + e.getMessage());
-            	Toast.makeText(getBaseContext(), "Cannot discover service: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            	Toast.makeText(getBaseContext(), "Cannot discover service: " + e.getMessage(), Toast.LENGTH_LONG).show(); // TODO use strring, make more friendly or delete
 			}
 			progress.dismiss();
 			if(availibleServices.isEmpty()){
-				Toast.makeText(getBaseContext(), "services not found", Toast.LENGTH_LONG).show();
+				Toast.makeText(getBaseContext(), "services not found", Toast.LENGTH_LONG).show(); // TODO use strring, make more friendly get back to main menu
 			}
 			else {
-				    DialogFragment newFragment = new AvailibleServicesDialogFragment(availibleServices);
+				    DialogFragment newFragment = new AvailibleServicesDialogFragment(availibleServices); //generate dialog with availible services
 				    newFragment.show(getFragmentManager(), "services");
 				}
 			break;
 			
 			
-		case 1:
+		case 1: // Network service discovery over not yet existing wifi p2p connection
 			mIntentFilter = new IntentFilter();
 		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
 		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
@@ -144,7 +155,7 @@ public class ClientMainActivity extends Activity{
         //unregisterReceiver(mReceiver);
     }
     
-    
+    // TODO repair & move to ndsp2p class
     private void discoverService() {
 	    DnsSdTxtRecordListener txtListener = new DnsSdTxtRecordListener() {
 	        @Override
@@ -220,15 +231,28 @@ public class ClientMainActivity extends Activity{
 	        });
 	}
     
+    
+    /**
+     * Indicates a dialog with list of services form availibleServices param
+     * @param availibleServices
+     */
     public void showAvailibleServicesDialog(List<NsdServiceInfo> availibleServices) {
-        // Create an instance of the dialog fragment and show it
         DialogFragment dialog = new AvailibleServicesDialogFragment(availibleServices);
         dialog.show(getFragmentManager(), "AvailibleServicesDialogFragment");
     }
     
+    /**
+     * Class defines how to build dialog with availible services for connection.
+     *
+     */
 	public class AvailibleServicesDialogFragment extends DialogFragment {
+		
 		private String[] list;
 		
+		/**
+		 * Construct list with names of services.
+		 * @param availibleServices
+		 */
 		public AvailibleServicesDialogFragment(List<NsdServiceInfo> availibleServices){
 			int length = availibleServices.size();
 			list=new String[length];
@@ -242,10 +266,13 @@ public class ClientMainActivity extends Activity{
 	        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 	        builder.setTitle("Select Service");
 			builder.setItems(list, new DialogInterface.OnClickListener() {
-	               public void onClick(DialogInterface dialog, int which) {
+	               public void onClick(DialogInterface dialog, int which) { //TODO move somewhere?
 	                   selectedService=availibleServices.get(which);
 	                   Toast.makeText(getBaseContext(), "choosen: " + selectedService.getServiceName(), Toast.LENGTH_LONG).show();
-	                   //TODO conect to selected
+	                   //TODO connect to selected, check if working
+	                   connectionHandler = new ConnectionHandler(conn.getServerSocket());
+	                   connectionHandler.setBoss(selectedService.getHost(), selectedService.getPort());
+	                   connectionHandler.sendToBoss(new DebugPacket("DUPA")); //TODO
 	               }
 			});
 	        // Create the AlertDialog object and return it

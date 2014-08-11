@@ -13,6 +13,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+/**
+ * Class allows to manage Tracklist.
+ * @author Wojciech
+ *
+ */
 public class TracksListFragment extends ListFragment {
 
 	List<Track> tracks = new ArrayList<Track>();

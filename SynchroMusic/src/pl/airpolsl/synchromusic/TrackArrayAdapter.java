@@ -8,7 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
+/**
+ * Class allows to prepare list of tracks for user.
+ * @author Wojciech
+ *
+ */
 public class TrackArrayAdapter extends ArrayAdapter<Track> {
 	private final Context context;
 	private final List<Track> tracks;

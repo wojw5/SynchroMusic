@@ -8,6 +8,11 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.CheckBox;
 
+/**
+ * Class indicates app rules and agreements notification. 
+ * @author Wojciech
+ *
+ */
 public class RulesApprovalActivity extends Activity {
 
 	@Override
@@ -20,6 +25,9 @@ public class RulesApprovalActivity extends Activity {
 	    findViewById(R.id.accept_button).setEnabled(((CheckBox) view).isChecked());
 	}
 	
+	/*
+	 * Save approval and go to settings activity.
+	 */
 	public void goToSettings(View view)
 	{
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this );

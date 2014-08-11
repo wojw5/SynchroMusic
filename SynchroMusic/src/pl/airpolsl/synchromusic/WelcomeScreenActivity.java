@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
-
+/*
+ * Simple  Welcome screen. to make app memorable.
+ */
 public class WelcomeScreenActivity extends Activity {
     
 
@@ -28,7 +30,7 @@ public class WelcomeScreenActivity extends Activity {
         		finish();
         	}
 
-        }, 3000);
+        }, 1000);
         
     }
 

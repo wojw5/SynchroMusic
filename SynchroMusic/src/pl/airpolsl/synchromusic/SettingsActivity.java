@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
+/**
+ * Activity for preferences management.
+ * @author Wojciech
+ *
+ */
 public class SettingsActivity extends Activity {
 
 	@Override

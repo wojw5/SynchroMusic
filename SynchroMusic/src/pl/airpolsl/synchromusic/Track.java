@@ -1,7 +1,11 @@
 package pl.airpolsl.synchromusic;
 
 import android.net.Uri;
-
+/**
+ * Represents one audio file with parameters
+ * @author Wojciech Widenka
+ *
+ */
 public class Track {
 	private String title;
 	private String artist;
