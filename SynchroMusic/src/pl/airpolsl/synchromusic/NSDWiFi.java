@@ -240,8 +240,15 @@ public class NSDWiFi implements ConnectivityMethod {
 	 * Turn off NDS service.
 	 */
 	public void tearDown() {
+		try
+		{
         mNsdManager.unregisterService(mRegistrationListener);
         mNsdManager.stopServiceDiscovery(mDiscoveryListener);
+		}
+		catch (Exception e)
+		{
+			Log.d(TAG,e.getMessage());
+		}
     }
 
 	@Override

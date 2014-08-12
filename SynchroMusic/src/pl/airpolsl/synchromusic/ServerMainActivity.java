@@ -1,9 +1,11 @@
 package pl.airpolsl.synchromusic;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,7 +40,12 @@ public class ServerMainActivity extends Activity
 			try {
 				conn = new NSDWiFi(this);
 			} catch (Exception e1) {
-				Log.d(TAG, "Cannot create NSDWiFi ");
+				Log.d(TAG, "Cannot create NSDWiFi: " +e1.getMessage());
+				Toast.makeText(getBaseContext(), "First connect to your network", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+				startActivity(intent);
+				finish();
+				return;
 			}
 			break;
 			
@@ -75,7 +82,7 @@ public class ServerMainActivity extends Activity
     @Override
     public void onDestroy(){
     	super.onDestroy();
-    	conn.pauseServer();
+    	if (conn!=null) conn.pauseServer();
     }
 	
 	@Override

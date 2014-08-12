@@ -11,6 +11,7 @@ import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.nsd.NsdServiceInfo;
@@ -22,6 +23,7 @@ import android.net.wifi.p2p.WifiP2pManager.DnsSdTxtRecordListener;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -49,6 +51,7 @@ public class ClientMainActivity extends Activity{
 	@Override 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_client_main);
 		/*SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		String connectionType = sharedPref.getString("pref_connection_mode", "0");
@@ -106,8 +109,12 @@ public class ClientMainActivity extends Activity{
 			try {
 				conn = new NSDWiFi(this);
 			} catch (Exception e1) {
-				Log.d(TAG,e1.getMessage());
-				e1.printStackTrace();
+				Log.d(TAG, "Cannot create NSDWiFi: " +e1.getMessage());
+				Toast.makeText(getBaseContext(), "First connect to your network", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+				startActivity(intent);
+				finish();
+				return;
 			}
 			ProgressDialog progress; // TODO would be nice if working ;/
 			progress = ProgressDialog.show(this, "Wait",
@@ -153,6 +160,7 @@ public class ClientMainActivity extends Activity{
     public void onPause() {
         super.onPause();
         //unregisterReceiver(mReceiver);
+        conn.tearDown();
     }
     
     // TODO repair & move to ndsp2p class
@@ -269,6 +277,10 @@ public class ClientMainActivity extends Activity{
 	               public void onClick(DialogInterface dialog, int which) { //TODO move somewhere?
 	                   selectedService=availibleServices.get(which);
 	                   Toast.makeText(getBaseContext(), "choosen: " + selectedService.getServiceName(), Toast.LENGTH_LONG).show();
+	                   Log.d(TAG,"Selected service: " +selectedService.getServiceName()
+	                		   + " on " +selectedService.getHost().getHostAddress()
+	                		   + ":" +selectedService.getPort()
+	                		);
 	                   //TODO connect to selected, check if working
 	                   connectionHandler = new ConnectionHandler(conn.getServerSocket());
 	                   connectionHandler.setBoss(selectedService.getHost(), selectedService.getPort());
