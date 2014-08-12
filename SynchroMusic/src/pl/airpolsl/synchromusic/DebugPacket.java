@@ -5,15 +5,9 @@ public class DebugPacket extends PacketTCP {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1662962384780402807L;
-
+	private static final long serialVersionUID = -8215147270708845235L;
 	Error error;
 	String description;
-	@Override
-	void setRawData() {
-		// TODO Auto-generated method stub
-
-	}
 	
 	public DebugPacket(Error nError, String nDescription)
 	{

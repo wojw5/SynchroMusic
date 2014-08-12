@@ -18,8 +18,8 @@ import android.util.Log;
  */
 public class Client extends User {
 	
-	public static InetAddress address;
-	public static int port;
+	private InetAddress address;
+	private int port;
 	
 	private Socket clientSocket;
 
@@ -30,11 +30,21 @@ public class Client extends User {
     
     private static final String TAG = "User";
     
-    public Client(Socket clientSocket) {
+    public Client(InetAddress a, int p) {
 
-    	this.clientSocket=clientSocket;
-    	address = clientSocket.getInetAddress();
-    	port = clientSocket.getPort();
+    	this.port = p;
+    	this.address = a;
+        Log.d(TAG, "Creating singleClient");
+
+        mSendThread = new Thread(new SendingThread());
+        mSendThread.start();
+    }
+    
+    public Client(Socket client) {
+
+    	clientSocket = client;
+    	this.port = clientSocket.getPort();
+    	this.address = clientSocket.getInetAddress();
         Log.d(TAG, "Creating singleClient");
 
         mSendThread = new Thread(new SendingThread());
@@ -47,18 +57,29 @@ public class Client extends User {
         private int QUEUE_CAPACITY = 10;
 
         public SendingThread() {
-            mPacketQueue = new ArrayBlockingQueue<Packet>(QUEUE_CAPACITY);
+        	mPacketQueue = new ArrayBlockingQueue<Packet>(QUEUE_CAPACITY);
         }
 
         @Override
         public void run() {
-
+        	try {
+				clientSocket = new Socket(address,port);
+				Log.d(TAG,"Sending thread socket created.");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+        	
+        	
+        	
             mRecThread = new Thread(new ReceivingThread());
             mRecThread.start();
 
             while (true) {
                 try {
                     Packet msg = mPacketQueue.take();
+                    Log.d(TAG,"Sending packet:" + msg.toString());
                     sendPacket(msg);
                 } catch (InterruptedException ie) {
                     Log.d(TAG, "Message sending loop interrupted, exiting");
@@ -74,7 +95,7 @@ public class Client extends User {
 		@Override
         public void run() {
         	ObjectInputStream input;
-        	
+
             try {
             	input = new ObjectInputStream(clientSocket.getInputStream());
             	

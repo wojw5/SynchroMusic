@@ -4,12 +4,11 @@ import pl.airpolsl.synchromusic.ConnectionDetails.SendMode;
 
 public abstract class PacketTCP extends Packet {
 
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1971857379253371248L;
-
-	abstract void setRawData();
+	private static final long serialVersionUID = -676812801949949374L;
 
 	@Override
 	void setConnectionDetails() {
