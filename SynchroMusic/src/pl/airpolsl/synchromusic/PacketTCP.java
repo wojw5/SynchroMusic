@@ -15,5 +15,6 @@ public abstract class PacketTCP extends Packet {
 		connectionDetails = new ConnectionDetails("TCP",SendMode.Unicast);
 	}
 
+	public abstract String toString();
 
 }

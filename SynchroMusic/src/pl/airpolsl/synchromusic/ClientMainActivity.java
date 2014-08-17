@@ -282,9 +282,10 @@ public class ClientMainActivity extends Activity{
 	                		   + ":" +selectedService.getPort()
 	                		);
 	                   //TODO connect to selected, check if working
-	                   connectionHandler = new ConnectionHandler(conn.getServerSocket());
+	                   connectionHandler = new ConnectionHandler(conn.getServerSocket(),getApplicationContext());
 	                   connectionHandler.setBoss(selectedService.getHost(), selectedService.getPort());
-	                   connectionHandler.sendToBoss(new DebugPacket("DUPA")); //TODO
+	                   //connectionHandler.sendToBoss(new DebugPacket("DUPA")); //TODO
+	                   
 	               }
 			});
 	        // Create the AlertDialog object and return it

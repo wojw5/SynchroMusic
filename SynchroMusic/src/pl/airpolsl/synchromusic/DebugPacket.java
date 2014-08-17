@@ -25,4 +25,9 @@ public class DebugPacket extends PacketTCP {
 		description=nDescription;
 	}
 
+	@Override
+	public String toString() {
+		return "Debug: " + error + ":" + description;
+	}
+
 }

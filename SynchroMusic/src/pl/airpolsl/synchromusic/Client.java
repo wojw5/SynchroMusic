@@ -1,5 +1,6 @@
 package pl.airpolsl.synchromusic;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -16,7 +17,7 @@ import android.util.Log;
  * @author Wojciech Widenka
  *
  */
-public class Client extends User {
+public class Client {
 	
 	private InetAddress address;
 	private int port;
@@ -26,9 +27,9 @@ public class Client extends User {
     private Thread mSendThread;
     private Thread mRecThread;
     
-    private BlockingQueue<Packet> mPacketQueue=null; // TODO needed?
-    
-    private static final String TAG = "User";
+    private BlockingQueue<Object> mPacketQueue=null; // TODO needed?
+    private ObjectOutputStream out;
+    private static final String TAG = "Client";
     
     public Client(InetAddress a, int p) {
 
@@ -57,13 +58,13 @@ public class Client extends User {
         private int QUEUE_CAPACITY = 10;
 
         public SendingThread() {
-        	mPacketQueue = new ArrayBlockingQueue<Packet>(QUEUE_CAPACITY);
+        	mPacketQueue = new ArrayBlockingQueue<Object>(QUEUE_CAPACITY);
         }
 
         @Override
         public void run() {
         	try {
-				clientSocket = new Socket(address,port);
+				if (clientSocket == null) clientSocket = new Socket(address,port);
 				Log.d(TAG,"Sending thread socket created.");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -78,8 +79,8 @@ public class Client extends User {
 
             while (true) {
                 try {
-                    Packet msg = mPacketQueue.take();
-                    Log.d(TAG,"Sending packet:" + msg.toString());
+                    Object msg = mPacketQueue.take();
+                    Log.d(TAG,"T:" + msg.toString());
                     sendPacket(msg);
                 } catch (InterruptedException ie) {
                     Log.d(TAG, "Message sending loop interrupted, exiting");
@@ -101,10 +102,12 @@ public class Client extends User {
             	
                 while (!Thread.currentThread().isInterrupted()) {
 
-                    Packet receivedPacket = null;
-                    receivedPacket = (Packet) input.readObject();
+                    Object receivedPacket = null;
+                    receivedPacket =  input.readObject();
                     if (receivedPacket != null) {
-                        Log.d(TAG, "Read from the stream: " + receivedPacket.toString());
+                        if (receivedPacket instanceof Packet) SynchroMusicProtocol.processPacket((Packet) receivedPacket);
+                        if (receivedPacket instanceof File) SynchroMusicProtocol.processFile((File) receivedPacket);
+                        else Log.d(TAG,"Received Object: " + receivedPacket.toString());
                         //TODO process packed method
                     } else {
                         Log.d(TAG, "The nulls! The nulls!");
@@ -130,20 +133,25 @@ public class Client extends User {
         }
     }
 
-    private void sendPacket(Packet packet) {
-        ObjectOutputStream out;
-		try {
-			out = new ObjectOutputStream(clientSocket.getOutputStream());
+    private void sendPacket(Object packet) {
+		if (out==null){
+				try {
+					out = new ObjectOutputStream(clientSocket.getOutputStream());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+    	
+    	try {
 			out.writeObject(packet);
-			out.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        Log.d(TAG, "Message sent: " + packet.toString());
     }
     
-    public void send(Packet packet){
+    public void send(Object packet){
     	if (mPacketQueue!=null) mPacketQueue.add(packet);
     }
 }

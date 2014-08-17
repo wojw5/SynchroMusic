@@ -65,11 +65,13 @@ public class TracksListFragment extends ListFragment {
 	        Uri uri = data.getData();
 	        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
 	        mediaMetadataRetriever.setDataSource(getActivity(),uri);
-	        tracks.add(new Track(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE),
+	        Track track = new Track(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE),
 	        		mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST),
 	        		Long.parseLong(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)),
-	        		uri));
+	        		uri);
+	        tracks.add(track);
 	        adapter.notifyDataSetChanged();
+	        ((ServerMainActivity) getActivity()).connectionHandler.sendToClients(track);
 	    }
 	  }
 	  super.onActivityResult(requestCode, resultCode, data);

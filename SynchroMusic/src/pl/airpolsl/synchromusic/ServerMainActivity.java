@@ -22,7 +22,8 @@ public class ServerMainActivity extends Activity
     public static final String TAG = "SynchroMusicServer";
     public String mServiceName = "SynchroMusic"; //TODO private?
     
-    private ConnectivityMethod conn;
+    public ConnectivityMethod conn;
+    public ConnectionHandler connectionHandler;
 	
     /**
      * Initialize appropriate ConnectivityMethod based on settings.
@@ -63,7 +64,7 @@ public class ServerMainActivity extends Activity
 			Log.d(TAG, "Cannot register service: " + e.getMessage());
         	Toast.makeText(getBaseContext(), "Cannot register service: " + e.getMessage(), Toast.LENGTH_LONG).show();
 		}
-	    new ConnectionHandler(conn.getServerSocket()); //TODO shouldn't be public assigned?
+	    connectionHandler = new ConnectionHandler(conn.getServerSocket(),getApplicationContext()); //TODO shouldn't be public assigned?
 	}
 	
 	/** register the BroadcastReceiver with the intent values to be matched *///TODO remove comment?

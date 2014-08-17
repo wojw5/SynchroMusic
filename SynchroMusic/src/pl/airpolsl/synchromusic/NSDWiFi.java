@@ -96,7 +96,7 @@ public class NSDWiFi implements ConnectivityMethod {
 		initializeDiscoveryListener(); //initializes callbacks for service discovery
 		initializeResolveListener(); //initializes callbacks for service resolving
 		mNsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, mDiscoveryListener);
-		Thread.sleep(4000); //TODO sleep is baaad, timer?
+		Thread.sleep(1000); //TODO sleep is baaad, timer?
 		mNsdManager.stopServiceDiscovery(mDiscoveryListener);
 		return availibleServices;
 	}
@@ -244,6 +244,7 @@ public class NSDWiFi implements ConnectivityMethod {
 		{
         mNsdManager.unregisterService(mRegistrationListener);
         mNsdManager.stopServiceDiscovery(mDiscoveryListener);
+        mServerSocket.close();
 		}
 		catch (Exception e)
 		{

@@ -1,11 +1,23 @@
 package pl.airpolsl.synchromusic;
 
+import android.content.Context;
+
 public class WelcomePacket extends PacketTCP {
 
-	User user;
+	private static final long serialVersionUID = -4094906936139557885L;
+	private User user;
 	
-	public WelcomePacket(User nUser){
-		user=nUser;
+	public WelcomePacket(Context context){
+		user= new User(context);
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	@Override
+	public String toString() {
+		return "Welcome: " + user.getName() + " (Android " + user.getOsVersion() +")";
 	}
 
 }

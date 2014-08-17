@@ -1,19 +1,25 @@
 package pl.airpolsl.synchromusic;
 
+import java.io.Serializable;
+
 import android.net.Uri;
 /**
  * Represents one audio file with parameters
  * @author Wojciech Widenka
  *
  */
-public class Track {
+public class Track implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4782592970852158068L;
 	private String title;
 	private String artist;
 	private String genere;
 	private Long length;
 	private String streamerName;
 	private Boolean played = false;
-	private Uri uri;
+	private String uri;
 	public enum Priority {
 	    Now, High, Normal, Low
 	}
@@ -24,7 +30,7 @@ public class Track {
 		title=nTitle;
 		artist=nArtist;
 		length=nlength;
-		uri=nUri;
+		uri=nUri.toString();
 	}
 	
 	public String getTitle()
@@ -39,6 +45,11 @@ public class Track {
 	public Long getLength()
 	{
 		return length;
+	}
+	
+	public String getUri()
+	{
+		return uri;
 	}
 	
 	public String getTime()
