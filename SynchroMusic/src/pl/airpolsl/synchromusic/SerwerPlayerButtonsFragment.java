@@ -23,5 +23,9 @@ public class SerwerPlayerButtonsFragment extends Fragment {
 		return inflater.inflate(R.layout.fragment_serwer_player_buttons,
 				container, false);
 	}
+	
+	public void startPlaying(View view){
+		((ServerMainActivity) getActivity()).connectionHandler.sendToClients(TracksListFragment.tracks.get(0));
+	}
 
 }

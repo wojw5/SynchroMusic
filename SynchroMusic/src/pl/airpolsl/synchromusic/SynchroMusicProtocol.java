@@ -2,7 +2,7 @@ package pl.airpolsl.synchromusic;
 
 import java.io.File;
 
-
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -16,8 +16,6 @@ public class SynchroMusicProtocol {
 	
 	static void sendTrack(Client client, Track track){
 		sendPacket(new PrepareToReceivePacket(track), client);
-		File file = new File(track.getUri());
-		sendFile(file,client);
 	};
 	
 	static void sendPacket(Packet packet,Client client){
@@ -37,9 +35,30 @@ public class SynchroMusicProtocol {
 	void receivePing(){
 		
 	};
-	static void processPacket(Packet packet){
+	static void processPacket(final Packet packet,Context context){
 		Log.d(TAG, "R: " + packet.toString());
 		if (packet instanceof WelcomePacket) {
+			
+		}
+		else if (packet instanceof PrepareToReceivePacket) {
+			((Activity)context).runOnUiThread(new Runnable() {
+			     @Override
+			     public void run() {
+
+			    	 TracksListFragment.addTrack(((PrepareToReceivePacket)packet).getTrack());
+			    }
+			});
+			
+		}
+		else if (packet instanceof StartPlayingPacket) {
+			String uri = ((StartPlayingPacket) packet).uri;
+			Long time = ((StartPlayingPacket) packet).time;
+			while (!TracksListFragment.tracks.isEmpty() && TracksListFragment.tracks.get(0).getUri() != uri)
+			{
+				TracksListFragment.tracks.remove(0);
+			}
+			
+			if (!TracksListFragment.tracks.isEmpty()) TracksListFragment.tracks.get(0).play(time);
 			
 		}
 	};

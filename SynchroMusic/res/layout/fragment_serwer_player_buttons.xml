@@ -26,7 +26,8 @@
         android:contentDescription="@string/play_pause"
         android:paddingBottom="30dp"
         android:paddingTop="30dp"
-        android:src="@android:drawable/ic_media_play" />
+        android:src="@android:drawable/ic_media_play"
+        android:onClick="startPlaying" />
 
     <ImageButton
         android:id="@+id/next_imageButton"

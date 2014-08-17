@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import android.content.Context;
 import android.util.Log;
 
 /**
@@ -30,9 +31,10 @@ public class Client {
     private BlockingQueue<Object> mPacketQueue=null; // TODO needed?
     private ObjectOutputStream out;
     private static final String TAG = "Client";
+    private Context context;
     
-    public Client(InetAddress a, int p) {
-
+    public Client(InetAddress a, int p, Context nContext) {
+    	this.context = nContext;
     	this.port = p;
     	this.address = a;
         Log.d(TAG, "Creating singleClient");
@@ -41,8 +43,8 @@ public class Client {
         mSendThread.start();
     }
     
-    public Client(Socket client) {
-
+    public Client(Socket client, Context nContext) {
+    	this.context = nContext;
     	clientSocket = client;
     	this.port = clientSocket.getPort();
     	this.address = clientSocket.getInetAddress();
@@ -105,7 +107,7 @@ public class Client {
                     Object receivedPacket = null;
                     receivedPacket =  input.readObject();
                     if (receivedPacket != null) {
-                        if (receivedPacket instanceof Packet) SynchroMusicProtocol.processPacket((Packet) receivedPacket);
+                        if (receivedPacket instanceof Packet) SynchroMusicProtocol.processPacket((Packet) receivedPacket,context);
                         if (receivedPacket instanceof File) SynchroMusicProtocol.processFile((File) receivedPacket);
                         else Log.d(TAG,"Received Object: " + receivedPacket.toString());
                         //TODO process packed method

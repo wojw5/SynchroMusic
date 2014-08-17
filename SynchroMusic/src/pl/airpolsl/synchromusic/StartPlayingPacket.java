@@ -6,24 +6,28 @@ public class StartPlayingPacket extends PacketTCP {
 	 * 
 	 */
 	private static final long serialVersionUID = 5245508448396681505L;
-	Track track;
+	String uri;
 	Long time;
 
 	
-	public StartPlayingPacket(Track nTrack, Long nTime){
-		track=nTrack;
+	public StartPlayingPacket(String nTrack, Long nTime){
+		uri=nTrack;
 		time=nTime;
 	}
 	
-	public StartPlayingPacket(Track nTrack){
-		track=nTrack;
+	public StartPlayingPacket(Track nTrack, Long nTime){
+		uri=nTrack.getUri();
+		time=nTime;
+	}
+	
+	public StartPlayingPacket(String nTrack){
+		uri=nTrack;
 		time=0L;
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Start at " + time + "media: " + uri ;
 	}
 
 }

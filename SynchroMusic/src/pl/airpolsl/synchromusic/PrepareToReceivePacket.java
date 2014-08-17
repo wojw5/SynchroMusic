@@ -16,6 +16,9 @@ public class PrepareToReceivePacket extends PacketTCP {
 		Random generator = new Random();
 		id=generator.nextInt();
 	}
+	public Track getTrack(){
+		return track;
+	}
 
 
 	@Override

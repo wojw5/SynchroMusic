@@ -282,7 +282,7 @@ public class ClientMainActivity extends Activity{
 	                		   + ":" +selectedService.getPort()
 	                		);
 	                   //TODO connect to selected, check if working
-	                   connectionHandler = new ConnectionHandler(conn.getServerSocket(),getApplicationContext());
+	                   connectionHandler = new ConnectionHandler(conn.getServerSocket(),getActivity());
 	                   connectionHandler.setBoss(selectedService.getHost(), selectedService.getPort());
 	                   //connectionHandler.sendToBoss(new DebugPacket("DUPA")); //TODO
 	                   

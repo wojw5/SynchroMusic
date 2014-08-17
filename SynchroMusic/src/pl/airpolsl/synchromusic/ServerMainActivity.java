@@ -1,5 +1,7 @@
 package pl.airpolsl.synchromusic;
 
+import java.io.IOException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +26,7 @@ public class ServerMainActivity extends Activity
     
     public ConnectivityMethod conn;
     public ConnectionHandler connectionHandler;
+    private FileServer fileServer;
 	
     /**
      * Initialize appropriate ConnectivityMethod based on settings.
@@ -64,7 +67,15 @@ public class ServerMainActivity extends Activity
 			Log.d(TAG, "Cannot register service: " + e.getMessage());
         	Toast.makeText(getBaseContext(), "Cannot register service: " + e.getMessage(), Toast.LENGTH_LONG).show();
 		}
-	    connectionHandler = new ConnectionHandler(conn.getServerSocket(),getApplicationContext()); //TODO shouldn't be public assigned?
+	    connectionHandler = new ConnectionHandler(conn.getServerSocket(),this); //TODO shouldn't be public assigned?
+	    
+	    fileServer = new FileServer(this);
+	    try {
+			fileServer.start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/** register the BroadcastReceiver with the intent values to be matched *///TODO remove comment?
@@ -84,6 +95,7 @@ public class ServerMainActivity extends Activity
     public void onDestroy(){
     	super.onDestroy();
     	if (conn!=null) conn.pauseServer();
+    	if (fileServer!=null) fileServer.stop();
     }
 	
 	@Override
