@@ -51,8 +51,9 @@ public class ClientMainActivity extends Activity{
 	@Override 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		TracksListFragment.tracks.clear();
 		setContentView(R.layout.activity_client_main);
+		
 		/*SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		String connectionType = sharedPref.getString("pref_connection_mode", "0");
 		switch (Integer.parseInt(connectionType)) {

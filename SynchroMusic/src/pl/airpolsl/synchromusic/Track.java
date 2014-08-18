@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 /**
  * Represents one audio file with parameters
@@ -44,21 +45,28 @@ public class Track implements Serializable {
 	}
 	
 	public void initPlayer(Context context){
-		mediaPlayer = MediaPlayer.create(context, Uri.parse(uri));
-		try {
-			mediaPlayer.prepare();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(mediaPlayer==null){
+			try {
+				mediaPlayer = MediaPlayer.create(context, Uri.parse("http://" + uri));
+				mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+					
+					@Override
+					public void onCompletion(MediaPlayer mp) {
+						mp.release();
+						TracksListFragment.tracks.remove(0);
+						TracksListFragment.adapter.notifyDataSetChanged();
+					}
+				});
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
-	public void play(Long time){
+	public void play(int time){
 		if(mediaPlayer!=null) {
-			mediaPlayer.seekTo(time.intValue());
+			mediaPlayer.seekTo(time);
 			mediaPlayer.start();
 		}
 	}
@@ -68,6 +76,14 @@ public class Track implements Serializable {
 			mediaPlayer.start();
 		}
 	}
+	
+	public void pause(int time){
+		if(mediaPlayer!=null && mediaPlayer.isPlaying()) {
+			mediaPlayer.seekTo(time);
+			mediaPlayer.pause();
+		}
+	}
+	
 	
 	public String getTitle()
 	{
@@ -120,5 +136,10 @@ public class Track implements Serializable {
 	
 	public void setLoaded(){
 		loaded = true;
+	}
+
+	public boolean isPlaying() {
+		if(mediaPlayer==null) return false;
+		return mediaPlayer.isPlaying();
 	}
 }

@@ -7,27 +7,26 @@ public class StopPlayingPacket extends PacketTCP {
 	 */
 	private static final long serialVersionUID = -8013914923799606004L;
 	Track track;
-	Long time;
+	int time;
 
 	
-	public StopPlayingPacket(Track nTrack, Long nTime){
+	public StopPlayingPacket(Track nTrack, int nTime){
 		track=nTrack;
 		time=nTime;
 	}
 	
 	public StopPlayingPacket(Track nTrack){
 		track=nTrack;
-		time=0L;
+		time=0;
 	}
 	
 	public StopPlayingPacket(){
-		time=0L;
+		time=0;
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Pause in " + track.getArtist() + " - " + track.getTitle() + " at " + time + "ms";
 	}
 
 }

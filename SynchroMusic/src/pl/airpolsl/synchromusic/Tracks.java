@@ -12,10 +12,11 @@ public class Tracks extends ArrayList<Track> {
 	 * 
 	 */
 	private static final long serialVersionUID = -8546012108223809889L;
-	private static int playersNumber = 0;
 	
 	public void initPlayers(Context context){
-		for (int i=playersNumber;i<=3;i++) {
+		int max=3;
+		if(max>this.size()) max=this.size();
+		for (int i=0;i<max;i++) {
 			this.get(i).initPlayer(context);
 		}
 	}

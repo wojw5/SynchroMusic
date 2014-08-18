@@ -1,9 +1,13 @@
 package pl.airpolsl.synchromusic;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,8 +15,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
+import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Class implements Connectivity Method as Network service discovery over existing wifi connection.
@@ -31,6 +37,7 @@ public class NSDWiFi implements ConnectivityMethod {
 	private ServerSocket mServerSocket=null;
 	private int mLocalPort;
 	private List<NsdServiceInfo> availibleServices;
+	private Queue<NsdServiceInfo> toResolveServices;
 	private NsdServiceInfo resolvedService;
 	
 	private static final String TAG = "NSDWiFi";
@@ -44,8 +51,9 @@ public class NSDWiFi implements ConnectivityMethod {
      */
 	public NSDWiFi(Context context) throws Exception{
 		this.context=context;
+		availibleServices = new ArrayList<NsdServiceInfo>();
+		toResolveServices = new LinkedList<NsdServiceInfo>();
 	    mNsdManager = (NsdManager) context.getSystemService(Context.NSD_SERVICE);
-	    availibleServices= new ArrayList<NsdServiceInfo>();
 	    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 		String username = sharedPref.getString("pref_username", "anonymous"); //TODO String??
 		mServiceName=username;
@@ -96,8 +104,9 @@ public class NSDWiFi implements ConnectivityMethod {
 		initializeDiscoveryListener(); //initializes callbacks for service discovery
 		initializeResolveListener(); //initializes callbacks for service resolving
 		mNsdManager.discoverServices(SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, mDiscoveryListener);
-		Thread.sleep(5000); //TODO sleep is baaad, timer?
+		Thread.sleep(1000); //TODO sleep is baaad, timer?
 		mNsdManager.stopServiceDiscovery(mDiscoveryListener);
+		while(!toResolveServices.isEmpty()) Thread.sleep(250); //TODO sleep is baaad, timer?
 		return availibleServices;
 	}
 	
@@ -110,6 +119,24 @@ public class NSDWiFi implements ConnectivityMethod {
 	    ConnectivityManager connectivityManager = (ConnectivityManager)
 	        context.getSystemService(Context.CONNECTIVITY_SERVICE);
 	    NetworkInfo networkInfo = null;
+	    
+	    WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+	    Method[] wmMethods = wifi.getClass().getDeclaredMethods();
+	    for(Method method: wmMethods){
+		    if(method.getName().equals("isWifiApEnabled")) {
+			    boolean isWifiAPenabled = false;
+			    try {
+			      isWifiAPenabled = (Boolean) method.invoke(wifi);
+			      if(isWifiAPenabled) return true;
+			    } catch (IllegalArgumentException e) {
+			      e.printStackTrace();
+			    } catch (IllegalAccessException e) {
+			      e.printStackTrace();
+			    } catch (InvocationTargetException e) {
+			      e.printStackTrace();
+			    }
+		    }
+	    }
 	    if (connectivityManager != null) {
 	        networkInfo =
 	            connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -127,6 +154,7 @@ public class NSDWiFi implements ConnectivityMethod {
 	            // with the name Android actually used.
 	            mServiceName = NsdServiceInfo.getServiceName();
 	            Log.d(TAG, "Service registered as: " + mServiceName);
+	            Toast.makeText(context, mServiceName + " registered", Toast.LENGTH_SHORT).show();
 	        }
 
 	        @Override
@@ -160,6 +188,7 @@ public class NSDWiFi implements ConnectivityMethod {
 	        public void onDiscoveryStarted(String regType) {
 	            Log.d(TAG, "Service discovery started");
 	            availibleServices.clear();
+	            toResolveServices.clear();
 	        }
 
 	        @Override
@@ -177,11 +206,14 @@ public class NSDWiFi implements ConnectivityMethod {
 	            	
 	                Log.d(TAG, "Same machine: " + mServiceName);
 	            } else {
-	            	for (NsdServiceInfo item : availibleServices) //important cause sometimes same service is found few times. that cousing problems
+	            	
+	            	/*for (String item : resolvedNames) //important cause sometimes same service is found few times. that cousing problems
 	            	{
-	            		if (item.getServiceName()==service.getServiceName()) return;
-	            	}
-		                mNsdManager.resolveService(service, mResolveListener); //if not exist get detailed data (IP, port)
+	            		Log.d(TAG,item + " vs " + service.getServiceName());
+	            		if (item == service.getServiceName()) return;
+	            	}*/
+	            	toResolveServices.add(service);
+	            	
 	            }
 	        }
 
@@ -195,6 +227,9 @@ public class NSDWiFi implements ConnectivityMethod {
 	        @Override
 	        public void onDiscoveryStopped(String serviceType) {
 	            Log.d(TAG, "Discovery stopped: " + serviceType);
+	            if(toResolveServices.isEmpty()) return;
+	            Log.d(TAG,"Trying to resolve: "+ toResolveServices.element().getServiceName());
+                mNsdManager.resolveService(toResolveServices.poll(), mResolveListener); //if not exist get detailed data (IP, port)
 	        }
 
 	        @Override
@@ -217,7 +252,10 @@ public class NSDWiFi implements ConnectivityMethod {
 	        @Override
 	        public void onResolveFailed(NsdServiceInfo serviceInfo, int errorCode) {
 	            // Called when the resolve fails.  Use the error code to debug.
-	            Log.e(TAG, "Resolve failed " + errorCode);
+	            Log.e(TAG, "Resolve failed : "+ serviceInfo.getServiceName() + ", error: " + errorCode);
+	            if(toResolveServices.isEmpty()) return;
+	            Log.d(TAG,"Trying to resolve: "+ toResolveServices.element().getServiceName());
+                mNsdManager.resolveService(toResolveServices.poll(), mResolveListener); //if not exist get detailed data (IP, port)
 	        }
 
 	        @Override
@@ -232,6 +270,9 @@ public class NSDWiFi implements ConnectivityMethod {
 	            resolvedService = serviceInfo;
 
                 availibleServices.add(resolvedService);
+                if(toResolveServices.isEmpty()) return;
+	            Log.d(TAG,"Trying to resolve: "+ toResolveServices.element().getServiceName());
+                mNsdManager.resolveService(toResolveServices.poll(), mResolveListener); //if not exist get detailed data (IP, port)
 	        }
 	    };
 	}

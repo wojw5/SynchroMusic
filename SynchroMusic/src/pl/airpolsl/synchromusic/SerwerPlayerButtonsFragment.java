@@ -24,8 +24,6 @@ public class SerwerPlayerButtonsFragment extends Fragment {
 				container, false);
 	}
 	
-	public void startPlaying(View view){
-		((ServerMainActivity) getActivity()).connectionHandler.sendToClients(TracksListFragment.tracks.get(0));
-	}
+	
 
 }

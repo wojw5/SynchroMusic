@@ -69,7 +69,7 @@ public class ConnectionHandler {
 			SynchroMusicProtocol.sendTrack(client, track);
 		}
 	}
-	public void sendToClients(StartPlayingPacket packet){
+	public void sendToClients(Packet packet){
 		for (Client client : clients.getList()) {
 			SynchroMusicProtocol.sendPacket(packet,client);
 		}

@@ -54,6 +54,10 @@ public class Client {
         mSendThread.start();
     }
 
+    private Client getSelfClient(){
+    	return this;
+    }
+    
     private class SendingThread implements Runnable {
 
         
@@ -107,7 +111,7 @@ public class Client {
                     Object receivedPacket = null;
                     receivedPacket =  input.readObject();
                     if (receivedPacket != null) {
-                        if (receivedPacket instanceof Packet) SynchroMusicProtocol.processPacket((Packet) receivedPacket,context);
+                        if (receivedPacket instanceof Packet) SynchroMusicProtocol.processPacket((Packet) receivedPacket,context,getSelfClient());
                         if (receivedPacket instanceof File) SynchroMusicProtocol.processFile((File) receivedPacket);
                         else Log.d(TAG,"Received Object: " + receivedPacket.toString());
                         //TODO process packed method

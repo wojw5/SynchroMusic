@@ -35,10 +35,12 @@ public class SynchroMusicProtocol {
 	void receivePing(){
 		
 	};
-	static void processPacket(final Packet packet,Context context){
+	static void processPacket(final Packet packet,Context context,Client from){
 		Log.d(TAG, "R: " + packet.toString());
 		if (packet instanceof WelcomePacket) {
-			
+			for (Track track : TracksListFragment.tracks) {
+				sendTrack(from, track);
+			}
 		}
 		else if (packet instanceof PrepareToReceivePacket) {
 			((Activity)context).runOnUiThread(new Runnable() {
@@ -52,13 +54,30 @@ public class SynchroMusicProtocol {
 		}
 		else if (packet instanceof StartPlayingPacket) {
 			String uri = ((StartPlayingPacket) packet).uri;
-			Long time = ((StartPlayingPacket) packet).time;
-			while (!TracksListFragment.tracks.isEmpty() && TracksListFragment.tracks.get(0).getUri() != uri)
+			int time = ((StartPlayingPacket) packet).time;
+			String trackUri = TracksListFragment.tracks.get(0).getUri();
+			while (!TracksListFragment.tracks.isEmpty() && trackUri.compareTo(uri) != 0)
 			{
 				TracksListFragment.tracks.remove(0);
+				TracksListFragment.tracks.initPlayers(context);
+				trackUri = TracksListFragment.tracks.get(0).getUri();
+				((Activity)context).runOnUiThread(new Runnable() {
+				     @Override
+				     public void run() {
+
+				    	 TracksListFragment.adapter.notifyDataSetChanged();
+				    }
+				});
+				
 			}
 			
 			if (!TracksListFragment.tracks.isEmpty()) TracksListFragment.tracks.get(0).play(time);
+			
+		}
+		else if (packet instanceof StopPlayingPacket) {
+			int time = ((StopPlayingPacket) packet).time;
+			
+			if (!TracksListFragment.tracks.isEmpty() || TracksListFragment.tracks.get(0).isPlaying()) TracksListFragment.tracks.get(0).pause(time);
 			
 		}
 	};

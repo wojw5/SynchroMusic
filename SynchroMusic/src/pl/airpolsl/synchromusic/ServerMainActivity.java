@@ -5,12 +5,16 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.widget.Toast;
 
 /**
@@ -27,6 +31,7 @@ public class ServerMainActivity extends Activity
     public ConnectivityMethod conn;
     public ConnectionHandler connectionHandler;
     private FileServer fileServer;
+    private MediaPlayer player;
 	
     /**
      * Initialize appropriate ConnectivityMethod based on settings.
@@ -106,5 +111,75 @@ public class ServerMainActivity extends Activity
 	    return super.onCreateOptionsMenu(menu);
 	}
 	
+	public void startPlaying(View view){
+		startPlaying();
+	}
+	
+	public void playNext(View view){
+		
+		if (TracksListFragment.tracks.size()>1){
+			Track currentTrack = TracksListFragment.tracks.get(0);
+			if(player!=null)
+			{
+				if(player.isPlaying()){
+					connectionHandler.sendToClients(new StopPlayingPacket(currentTrack,player.getCurrentPosition()));
+					player.stop();
+				}
+				player.release();
+			}
+			TracksListFragment.tracks.remove(0);
+			currentTrack = TracksListFragment.tracks.get(0);
+	        player = null;
+			player = MediaPlayer.create(this, Uri.parse("http://"+currentTrack.getUri()));
+			player.setOnCompletionListener(new
+				    OnCompletionListener() {        
+		        @Override
+		        public void onCompletion(MediaPlayer mp) {
+		        mp.release();
+		        TracksListFragment.tracks.remove(0);
+		        player = null;
+				TracksListFragment.adapter.notifyDataSetChanged();
+				startPlaying();
+			    }
+		        
+			});
+			connectionHandler.sendToClients(new StartPlayingPacket(currentTrack));
+			TracksListFragment.adapter.notifyDataSetChanged();
+			player.start();
+		}
+	}
+	
+	public void startPlaying(){
+		if (TracksListFragment.tracks.size()>0){
+			Track currentTrack = TracksListFragment.tracks.get(0);
+			if(player!=null)
+			{
+				if(player.isPlaying()){
+					connectionHandler.sendToClients(new StopPlayingPacket(currentTrack,player.getCurrentPosition()));
+					player.pause();
+				}
+				else {
+					connectionHandler.sendToClients(new StartPlayingPacket(currentTrack,player.getCurrentPosition()));
+					player.start();
+				}
+			}
+			else{
+				player = MediaPlayer.create(this, Uri.parse("http://"+currentTrack.getUri()));
+				player.setOnCompletionListener(new
+					    OnCompletionListener() {        
+			        @Override
+			        public void onCompletion(MediaPlayer mp) {
+			        mp.release();
+			        TracksListFragment.tracks.remove(0);
+			        player = null;
+					TracksListFragment.adapter.notifyDataSetChanged();
+					startPlaying();
+			    }
+			});
+				connectionHandler.sendToClients(new StartPlayingPacket(currentTrack));
+				player.start();
+			}
+		}
+	}
 }
 
