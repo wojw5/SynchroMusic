@@ -160,6 +160,7 @@ public class ServerMainActivity extends Activity
 				}
 				else {
 					connectionHandler.sendToClients(new StartPlayingPacket(currentTrack,player.getCurrentPosition()));
+					player.seekTo(player.getCurrentPosition()-50); //approximate latency
 					player.start();
 				}
 			}
@@ -177,6 +178,7 @@ public class ServerMainActivity extends Activity
 			    }
 			});
 				connectionHandler.sendToClients(new StartPlayingPacket(currentTrack));
+				player.seekTo(player.getCurrentPosition()-50); //approximate latency
 				player.start();
 			}
 		}

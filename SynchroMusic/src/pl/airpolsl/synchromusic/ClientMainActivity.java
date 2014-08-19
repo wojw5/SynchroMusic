@@ -53,7 +53,67 @@ public class ClientMainActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		TracksListFragment.tracks.clear();
 		setContentView(R.layout.activity_client_main);
-		
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this); //get preferences
+		String connectionType = sharedPref.getString("pref_connection_mode", "0");			//get connection type
+		switch (Integer.parseInt(connectionType)) {
+		case 0: // Network service discovery over existing wifi connection
+			try {
+				try {
+					conn = new NSDWiFi(this);
+				} catch (Exception e1) {
+					Log.d(TAG, "Cannot create NSDWiFi: " +e1.getMessage());
+					Toast.makeText(getBaseContext(), "First connect to your network", Toast.LENGTH_LONG).show();
+					Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+					startActivity(intent);
+					finish();
+					return;
+				}
+			} catch (Exception e1) {
+				Log.d(TAG, "Cannot create NSDWiFi: " +e1.getMessage());
+				Toast.makeText(getBaseContext(), "First connect to your network", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+				startActivity(intent);
+				finish();
+				return;
+			}
+			ProgressDialog progress; // TODO would be nice if working ;/
+			progress = ProgressDialog.show(this, "Wait",
+				    "Searching services", true);
+			try {
+				availibleServices = conn.discoverServices();
+			} catch (Exception e) {
+				Log.d(TAG, "Cannot discover service: " + e.getMessage());
+            	Toast.makeText(getBaseContext(), "Cannot discover service: " + e.getMessage(), Toast.LENGTH_LONG).show(); // TODO use strring, make more friendly or delete
+			}
+			progress.dismiss();
+			if(availibleServices.isEmpty()){
+				Toast.makeText(getBaseContext(), "services not found", Toast.LENGTH_LONG).show(); // TODO use strring, make more friendly get back to main menu
+			}
+			else {
+				    DialogFragment newFragment = new AvailibleServicesDialogFragment(availibleServices); //generate dialog with availible services
+				    newFragment.show(getFragmentManager(), "services");
+				}
+			break;
+			
+			
+		case 1: // Network service discovery over not yet existing wifi p2p connection
+			mIntentFilter = new IntentFilter();
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+		    
+		    mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
+		    
+		    mChannel = mManager.initialize(this, getMainLooper(), null);
+		    
+		    mReceiver = new ClientBroadcastReceiver(mManager, mChannel, this);
+		    discoverService();
+		    break;
+
+		default:
+			break;
+		}	
 		/*SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		String connectionType = sharedPref.getString("pref_connection_mode", "0");
 		switch (Integer.parseInt(connectionType)) {
@@ -103,58 +163,7 @@ public class ClientMainActivity extends Activity{
         super.onResume();
         //mReceiver = new ClientBroadcastReceiver(mManager, mChannel, this); TODO delete?
         //registerReceiver(mReceiver, mIntentFilter);
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this); //get preferences
-		String connectionType = sharedPref.getString("pref_connection_mode", "0");			//get connection type
-		switch (Integer.parseInt(connectionType)) {
-		case 0: // Network service discovery over existing wifi connection
-			try {
-				conn = new NSDWiFi(this);
-			} catch (Exception e1) {
-				Log.d(TAG, "Cannot create NSDWiFi: " +e1.getMessage());
-				Toast.makeText(getBaseContext(), "First connect to your network", Toast.LENGTH_LONG).show();
-				Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
-				startActivity(intent);
-				finish();
-				return;
-			}
-			ProgressDialog progress; // TODO would be nice if working ;/
-			progress = ProgressDialog.show(this, "Wait",
-				    "Searching services", true);
-			try {
-				availibleServices = conn.discoverServices();
-			} catch (Exception e) {
-				Log.d(TAG, "Cannot discover service: " + e.getMessage());
-            	Toast.makeText(getBaseContext(), "Cannot discover service: " + e.getMessage(), Toast.LENGTH_LONG).show(); // TODO use strring, make more friendly or delete
-			}
-			progress.dismiss();
-			if(availibleServices.isEmpty()){
-				Toast.makeText(getBaseContext(), "services not found", Toast.LENGTH_LONG).show(); // TODO use strring, make more friendly get back to main menu
-			}
-			else {
-				    DialogFragment newFragment = new AvailibleServicesDialogFragment(availibleServices); //generate dialog with availible services
-				    newFragment.show(getFragmentManager(), "services");
-				}
-			break;
-			
-			
-		case 1: // Network service discovery over not yet existing wifi p2p connection
-			mIntentFilter = new IntentFilter();
-		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-		    mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
-		    
-		    mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
-		    
-		    mChannel = mManager.initialize(this, getMainLooper(), null);
-		    
-		    mReceiver = new ClientBroadcastReceiver(mManager, mChannel, this);
-		    discoverService();
-		    break;
-
-		default:
-			break;
-		}
+        
     }
 
     @Override
