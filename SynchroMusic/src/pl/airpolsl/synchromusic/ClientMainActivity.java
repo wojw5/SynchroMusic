@@ -58,41 +58,34 @@ public class ClientMainActivity extends Activity{
 		switch (Integer.parseInt(connectionType)) {
 		case 0: // Network service discovery over existing wifi connection
 			try {
-				try {
-					conn = new NSDWiFi(this);
-				} catch (Exception e1) {
-					Log.d(TAG, "Cannot create NSDWiFi: " + e1.getMessage());
-					Toast.makeText(getBaseContext(), "First connect to your network", Toast.LENGTH_LONG).show();
-					Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
-					startActivity(intent);
-					finish();
-					return;
-				}
+				conn = new NSDWiFi(this);
 			} catch (Exception e1) {
 				Log.d(TAG, "Cannot create NSDWiFi: " + e1.getMessage());
-				Toast.makeText(getBaseContext(), "First connect to your network", Toast.LENGTH_LONG).show();
+				Toast.makeText(getBaseContext(), "First connect to your network",
+						Toast.LENGTH_LONG).show();
 				Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
 				startActivity(intent);
 				finish();
 				return;
 			}
-			ProgressDialog progress; // TODO would be nice if working ;/
-			progress = ProgressDialog.show(this, "Wait",
-				    "Searching services", true);
 			try {
 				availibleServices = conn.discoverServices();
 			} catch (Exception e) {
 				Log.d(TAG, "Cannot discover service: " + e.getMessage());
-            	Toast.makeText(getBaseContext(), "Cannot discover service: " + e.getMessage(), Toast.LENGTH_LONG).show(); // TODO use strring, make more friendly or delete
+				Toast.makeText(getBaseContext(), "Cannot discover service: " +
+						e.getMessage(), Toast.LENGTH_LONG).show();
 			}
-			progress.dismiss();
-			if(availibleServices.isEmpty()){
-				Toast.makeText(getBaseContext(), "services not found", Toast.LENGTH_LONG).show(); // TODO use strring, make more friendly get back to main menu
+			if (availibleServices.isEmpty()) {
+				Toast.makeText(getBaseContext(), "Services not found :(",
+						Toast.LENGTH_LONG).show();
+				finish();
+				return;
 			}
 			else {
-				    DialogFragment newFragment = new AvailibleServicesDialogFragment(availibleServices); //generate dialog with availible services
-				    newFragment.show(getFragmentManager(), "services");
-				}
+				DialogFragment newFragment =
+						new AvailibleServicesDialogFragment(availibleServices);	//generate dialog with availible services
+				newFragment.show(getFragmentManager(), "services");				//display that dialog
+			}
 			break;
 			
 			
@@ -112,6 +105,9 @@ public class ClientMainActivity extends Activity{
 		    break;
 
 		default:
+			Log.d(TAG, "Wrong setting");
+			Toast.makeText(getBaseContext(), "Wrong setting", Toast.LENGTH_LONG).show();
+			finish();
 			break;
 		}	
 		/*SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -278,30 +274,23 @@ public class ClientMainActivity extends Activity{
 				list[i]=availibleServices.get(i).getServiceName();
 			}
 		}
-	    @Override
-	    public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-	        builder.setTitle("Select Service");
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			builder.setTitle("Select Service");
 			builder.setItems(list, new DialogInterface.OnClickListener() {
-	               public void onClick(DialogInterface dialog, int which) { //TODO move somewhere?
-	                   selectedService=availibleServices.get(which);
-	                   Toast.makeText(getBaseContext(), "choosen: " + selectedService.getServiceName(), Toast.LENGTH_LONG).show();
-	                   Log.d(TAG,"Selected service: " +selectedService.getServiceName()
-	                		   + " on " +selectedService.getHost().getHostAddress()
-	                		   + ":" +selectedService.getPort()
-	                		);
-	                   //TODO connect to selected, check if working
-	                   connectionHandler = new ConnectionHandler(conn.getServerSocket(),getActivity());
-	                   connectionHandler.setBoss(selectedService.getHost(), selectedService.getPort());
-	                   //connectionHandler.sendToBoss(new DebugPacket("DUPA")); //TODO
-	                   
-	               }
+				public void onClick(DialogInterface dialog, int which) {
+					selectedService=availibleServices.get(which);
+					Toast.makeText(getBaseContext(), "choosen: " +
+							selectedService.getServiceName(), Toast.LENGTH_LONG).show();
+					Log.d(TAG,"Selected service: " +selectedService.getServiceName() +
+							" on " +selectedService.getHost().getHostAddress() +
+							":" +selectedService.getPort());
+					connectionHandler = new ConnectionHandler(conn.getServerSocket(), getActivity());
+					connectionHandler.setBoss(selectedService.getHost(), selectedService.getPort());
+				}
 			});
-	        // Create the AlertDialog object and return it
-	        return builder.create();
-	        
-	    }
+			return builder.create(); // Create the AlertDialog object and return it
+		}
 	}
-
-    
 }

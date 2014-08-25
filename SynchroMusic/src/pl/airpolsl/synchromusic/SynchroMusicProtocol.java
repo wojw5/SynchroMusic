@@ -35,24 +35,10 @@ public class SynchroMusicProtocol {
 	void receivePing(){
 		
 	};
-	static void processPacket(final Packet packet,Context context,Client from){
+	static void processPacket(final Packet packet,Context context,Client from) {
 		Log.d(TAG, "R: " + packet.toString());
-		if (packet instanceof WelcomePacket) {
-			for (Track track : TracksListFragment.tracks) {
-				sendTrack(from, track);
-			}
-		}
-		else if (packet instanceof PrepareToReceivePacket) {
-			((Activity)context).runOnUiThread(new Runnable() {
-			     @Override
-			     public void run() {
-
-			    	 TracksListFragment.addTrack(((PrepareToReceivePacket)packet).getTrack());
-			    }
-			});
-			
-		}
-		else if (packet instanceof StartPlayingPacket) {
+		
+		if (packet instanceof StartPlayingPacket) {
 			String uri = ((StartPlayingPacket) packet).uri;
 			int time = ((StartPlayingPacket) packet).time;
 			String trackUri = TracksListFragment.tracks.get(0).getUri();
@@ -62,31 +48,36 @@ public class SynchroMusicProtocol {
 				TracksListFragment.tracks.initPlayers(context);
 				trackUri = TracksListFragment.tracks.get(0).getUri();
 				((Activity)context).runOnUiThread(new Runnable() {
-				     @Override
-				     public void run() {
-
-				    	 TracksListFragment.adapter.notifyDataSetChanged();
-				    }
+					@Override
+					public void run() {
+						TracksListFragment.adapter.notifyDataSetChanged();
+					}
 				});
-				
 			}
-			
-			if (!TracksListFragment.tracks.isEmpty()) TracksListFragment.tracks.get(0).play(time);
-			
+			if (!TracksListFragment.tracks.isEmpty())
+				TracksListFragment.tracks.get(0).play(time);
+		}
+		else if (packet instanceof PrepareToReceivePacket) {
+			((Activity)context).runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					TracksListFragment.addTrack(((PrepareToReceivePacket)packet).getTrack());
+				}
+			});
+		}
+		else if (packet instanceof WelcomePacket) {
+			for (Track track : TracksListFragment.tracks) {
+				sendTrack(from, track);
+			}
 		}
 		else if (packet instanceof StopPlayingPacket) {
 			int time = ((StopPlayingPacket) packet).time;
-			
-			if (!TracksListFragment.tracks.isEmpty() || TracksListFragment.tracks.get(0).isPlaying()) TracksListFragment.tracks.get(0).pause(time);
-			
+			if (!TracksListFragment.tracks.isEmpty()
+					|| TracksListFragment.tracks.get(0).isPlaying())
+				TracksListFragment.tracks.get(0).pause(time);
 		}
 	};
 	
-	static void processFile(File file){
-		Log.d(TAG, "R: " + file.toString());
-		//File toSave = new File(context.getFilesDir(), filename);
-		//Files.
-	};
 	void sendPacketMulticast(){
 		
 	};

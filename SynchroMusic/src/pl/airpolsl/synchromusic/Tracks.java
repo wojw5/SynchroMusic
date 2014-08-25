@@ -7,10 +7,7 @@ import android.content.Context;
 
 
 public class Tracks extends ArrayList<Track> {
-
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -8546012108223809889L;
 	
 	public void initPlayers(Context context){

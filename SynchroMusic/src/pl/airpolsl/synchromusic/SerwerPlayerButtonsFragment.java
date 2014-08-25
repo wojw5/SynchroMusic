@@ -6,10 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link android.support.v4.app.Fragment} subclass.
- * 
- */
+
 public class SerwerPlayerButtonsFragment extends Fragment {
 
 	public SerwerPlayerButtonsFragment() {
@@ -23,7 +20,4 @@ public class SerwerPlayerButtonsFragment extends Fragment {
 		return inflater.inflate(R.layout.fragment_serwer_player_buttons,
 				container, false);
 	}
-	
-	
-
 }
