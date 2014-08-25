@@ -31,7 +31,9 @@ public class TrackArrayAdapter extends ArrayAdapter<Track> {
     TextView title = (TextView) rowView.findViewById(R.id.title_textView);
     TextView artist = (TextView) rowView.findViewById(R.id.artist_textView);
     TextView time = (TextView) rowView.findViewById(R.id.time_textView);
-    title.setText(tracks.get(position).getTitle());
+    String cutedTitle = tracks.get(position).getTitle();
+    if(cutedTitle.length()>20)cutedTitle=cutedTitle.substring(0, 20) + "...";
+    title.setText(cutedTitle);
     artist.setText(tracks.get(position).getArtist());
     time.setText(tracks.get(position).getTime());
     

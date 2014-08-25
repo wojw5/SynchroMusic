@@ -41,14 +41,14 @@ public class ClientMainActivity extends Activity{
 	private ClientBroadcastReceiver mReceiver;
 	
 	public static final String SERVICE_TYPE = "_synchromusic._tcp.";
-    public static final String TAG = "SynchroMusicClient";
-    public String mServiceName = "SynchroMusic";
-    ConnectionHandler connectionHandler;
-    ConnectivityMethod conn;
-    
-    final HashMap<String, String> buddies = new HashMap<String, String>();
-    
-	@Override 
+	public static final String TAG = "SynchroMusicClient";
+	public String mServiceName = "SynchroMusic";
+	public ConnectionHandler connectionHandler;
+	public ConnectivityMethod conn;
+	
+	final HashMap<String, String> buddies = new HashMap<String, String>();
+	
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		TracksListFragment.tracks.clear();
@@ -61,7 +61,7 @@ public class ClientMainActivity extends Activity{
 				try {
 					conn = new NSDWiFi(this);
 				} catch (Exception e1) {
-					Log.d(TAG, "Cannot create NSDWiFi: " +e1.getMessage());
+					Log.d(TAG, "Cannot create NSDWiFi: " + e1.getMessage());
 					Toast.makeText(getBaseContext(), "First connect to your network", Toast.LENGTH_LONG).show();
 					Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
 					startActivity(intent);
@@ -69,7 +69,7 @@ public class ClientMainActivity extends Activity{
 					return;
 				}
 			} catch (Exception e1) {
-				Log.d(TAG, "Cannot create NSDWiFi: " +e1.getMessage());
+				Log.d(TAG, "Cannot create NSDWiFi: " + e1.getMessage());
 				Toast.makeText(getBaseContext(), "First connect to your network", Toast.LENGTH_LONG).show();
 				Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
 				startActivity(intent);
@@ -280,7 +280,6 @@ public class ClientMainActivity extends Activity{
 		}
 	    @Override
 	    public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        // Use the Builder class for convenient dialog construction
 	        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 	        builder.setTitle("Select Service");
 			builder.setItems(list, new DialogInterface.OnClickListener() {
