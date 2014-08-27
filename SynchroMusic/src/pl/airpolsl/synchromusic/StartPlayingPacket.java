@@ -3,13 +3,12 @@ package pl.airpolsl.synchromusic;
 public class StartPlayingPacket extends PacketTCP {
 
 	/**
-	 * 
+	 * Packet that informs about which song and in what time start playing.
 	 */
 	private static final long serialVersionUID = -5293205630117854181L;
 	String uri;
 	int time;
 
-	
 	public StartPlayingPacket(String nTrack, int nTime){
 		uri=nTrack;
 		time=nTime;

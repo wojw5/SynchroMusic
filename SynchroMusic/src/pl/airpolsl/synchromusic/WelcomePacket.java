@@ -2,6 +2,11 @@ package pl.airpolsl.synchromusic;
 
 import android.content.Context;
 
+/**
+ * Packet to send to notify about new user
+ * @author Wojciech
+ *
+ */
 public class WelcomePacket extends PacketTCP {
 
 	private static final long serialVersionUID = -4094906936139557885L;

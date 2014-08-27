@@ -5,12 +5,17 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 
 import android.util.Log;
-
+/**
+ * Receiving multicast thread
+ * Bugged in some android
+ * http://codeisland.org/2012/udp-multicast-on-android/
+ * https://code.google.com/p/android/issues/detail?id=32662
+ */
 public class MultiCastThread implements Runnable
 {
-	public static final int PORT_NO = 5436;
-    public static final String GROUP_ADDR = "230.123.123.123";
-    public static final int DGRAM_LEN = 1024;
+	private static final int PORT_NO = 5436;
+	private static final String GROUP_ADDR = "230.123.123.123";
+	private static final int DGRAM_LEN = 1024;
     public static final int TIME_TO_LIVE = 2;
     
     public static final String TAG = "MultiCastThread";

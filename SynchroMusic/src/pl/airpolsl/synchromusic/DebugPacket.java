@@ -3,7 +3,7 @@ package pl.airpolsl.synchromusic;
 public class DebugPacket extends PacketTCP {
 
 	/**
-	 * 
+	 * Packet containing debug information
 	 */
 	private static final long serialVersionUID = -8215147270708845235L;
 	Error error;

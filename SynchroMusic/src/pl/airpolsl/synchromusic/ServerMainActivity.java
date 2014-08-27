@@ -113,10 +113,18 @@ public class ServerMainActivity extends Activity
 		return super.onCreateOptionsMenu(menu);
 	}
 	
+	/**
+	 * Start/pause playing action.
+	 * @param view
+	 */
 	public void startPlaying(View view){
 		startPlaying();
 	}
 	
+	/**
+	 * play next action
+	 * @param view
+	 */
 	public void playNext(View view){
 		if (TracksListFragment.tracks.size()>1) {
 			Track currentTrack = TracksListFragment.tracks.get(0);
@@ -149,6 +157,9 @@ public class ServerMainActivity extends Activity
 		}
 	}
 	
+	/**
+	 * Start/pause first song on the list if not empty
+	 */
 	public void startPlaying(){
 		if (TracksListFragment.tracks.size()>0) {
 			Track currentTrack = TracksListFragment.tracks.get(0);

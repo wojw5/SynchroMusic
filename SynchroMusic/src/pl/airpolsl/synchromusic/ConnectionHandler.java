@@ -24,8 +24,9 @@ public class ConnectionHandler {
 	private Context context;
 	private static final String TAG = "ConnectionHandler";
 	
-	/*
-	 * Construct device ServerSocket to be able to receive data.
+	/**
+	 * Constructs device ServerSocket to be able to receive data. Initializes Connection Handler
+	 * @param nContext android context
 	 */
 	public ConnectionHandler(Context nContext){
 		context = nContext;
@@ -37,8 +38,10 @@ public class ConnectionHandler {
 		init();
 	}
 	
-	/*
-	 * Take control over existing server socket to manage connections.
+	/**
+	 * Takes control over existing server socket to manage connections.
+	 * @param serverSocket server socket
+	 * @param nContext android context
 	 */
 	public ConnectionHandler(ServerSocket serverSocket,Context nContext){
 		context = nContext;
@@ -46,8 +49,11 @@ public class ConnectionHandler {
 		init();
 	}
 	
-	/*
+	
+	/**
 	 * Set SynchroMusic server. 
+	 * @param address
+	 * @param port
 	 */
 	public void setBoss(InetAddress address, int port){
 			boss = new Client(address,port,context);
@@ -70,6 +76,10 @@ public class ConnectionHandler {
 		}
 	}
 	
+	/**
+	 * Sends track to all clients
+	 * @param track
+	 */
 	public void sendToClients(Track track){
 		for (Client client : clients.getList()) {
 			try {
@@ -80,6 +90,11 @@ public class ConnectionHandler {
 			}
 		}
 	}
+	
+	/**
+	 * Sends packet to all clients
+	 * @param packet
+	 */
 	public void sendToClients(Packet packet){
 		// if (packet instanceof StartPlayingPacket) SendMulticast.start(); wait for bugfixes
 		for (Client client : clients.getList()) {
@@ -92,7 +107,7 @@ public class ConnectionHandler {
 		}
 	}
 	
-	/*
+	/**
 	 * Start server thread
 	 */
 	private void init(){

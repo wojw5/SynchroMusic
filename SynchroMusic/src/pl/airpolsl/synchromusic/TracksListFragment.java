@@ -63,7 +63,8 @@ public class TracksListFragment extends ListFragment {
 
 	    return true;
 	  } 
-	
+
+
 	@Override
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 
@@ -96,12 +97,21 @@ public class TracksListFragment extends ListFragment {
 	  super.onActivityResult(requestCode, resultCode, data);
 	}
 	
+	/**
+	 * add track to the list
+	 * @param track
+	 */
 	public static void addTrack(Track track){
 		tracks.add(track);
 		tracks.initPlayers(appContext);
 		adapter.notifyDataSetChanged();
 	}
 	
+	/**
+	 * 
+	 * @return ip address of current device
+	 * @throws SocketException
+	 */
 	static InetAddress ip() throws SocketException {
 	    Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
 	    NetworkInterface ni;

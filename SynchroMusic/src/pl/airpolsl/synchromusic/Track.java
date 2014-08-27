@@ -1,6 +1,5 @@
 package pl.airpolsl.synchromusic;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import android.content.Context;
@@ -35,7 +34,13 @@ public class Track implements Serializable {
 	    Now, High, Normal, Low
 	}
 	
-	
+	/**
+	 * Create new track
+	 * @param nTitle
+	 * @param nArtist
+	 * @param nlength
+	 * @param nUri
+	 */
 	public Track(String nTitle, String nArtist, Long nlength, String nUri)
 	{
 		title=nTitle;
@@ -44,6 +49,10 @@ public class Track implements Serializable {
 		uri=nUri;
 	}
 	
+	/**
+	 * initialize media player for this track. this mean also start buffering song.
+	 * @param context
+	 */
 	public void initPlayer(Context context){
 		if(mediaPlayer==null){
 			try {
@@ -63,7 +72,10 @@ public class Track implements Serializable {
 			}
 		}
 	}
-	
+	/**
+	 * Start playing
+	 * @param time start time in ms
+	 */
 	public void play(int time){
 		if(mediaPlayer!=null) {
 			mediaPlayer.seekTo(time);
@@ -71,12 +83,19 @@ public class Track implements Serializable {
 		}
 	}
 	
+	/**
+	 * Start playing from last state
+	 */
 	public void play(){
 		if(mediaPlayer!=null) {
 			mediaPlayer.start();
 		}
 	}
 	
+	/**
+	 * Pause and seek to time
+	 * @param time in ms
+	 */
 	public void pause(int time){
 		if(mediaPlayer!=null && mediaPlayer.isPlaying()) {
 			mediaPlayer.seekTo(time);
@@ -84,6 +103,9 @@ public class Track implements Serializable {
 		}
 	}
 	
+	/**
+	 * Pause track
+	 */
 	public void pause(){
 		if(mediaPlayer!=null && mediaPlayer.isPlaying()) {
 			mediaPlayer.pause();

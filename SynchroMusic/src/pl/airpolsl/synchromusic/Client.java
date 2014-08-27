@@ -32,6 +32,12 @@ public class Client {
 	private static final String TAG = "Client";
 	private Context context;
 	
+	/**
+	 * Creates new client connection in network. New socket will be created.
+	 * @param a client address
+	 * @param p client port
+	 * @param nContext android context
+	 */
 	public Client(InetAddress a, int p, Context nContext) {
 		this.context = nContext;
 		this.port = p;
@@ -42,6 +48,11 @@ public class Client {
 	    mSendThread.start();
 	}
 	
+	/**
+	 *  Creates new client connection in network. Based on passed socket.
+	 * @param client existing socket
+	 * @param nContext android context
+	 */
 	public Client(Socket client, Context nContext) {
 		this.context = nContext;
 		clientSocket = client;
@@ -53,19 +64,32 @@ public class Client {
 	    mSendThread.start();
 	}
 	
+	/**
+	 * To be used in separate threads in internal thread classes.
+	 * @return this Client object
+	 */
 	private Client getSelfClient(){
 		return this;
 	}
 	
+	/**
+	 * Class for send messages to Client in background.
+	 */
 	private class SendingThread implements Runnable {
 	
 		private int QUEUE_CAPACITY = 10;
 		
+		/**
+		 * Initializes packet queue.
+		 */
 		public SendingThread() {
 			mPacketQueue = new ArrayBlockingQueue<Object>(QUEUE_CAPACITY);
 		}
 		
 		@Override
+		/**
+		 * Opens socket to client if needed and sending messages from queue.
+		 */
 		public void run(){
 			try {
 				if (clientSocket == null) clientSocket = new Socket(address,port);
@@ -91,10 +115,16 @@ public class Client {
 			}
 		}
 	}
-
+	
+	/**
+	 * Class for receive messages from Client in background.
+	 */
 	private class ReceivingThread implements Runnable {
 		
 		@Override
+		/**
+		 * Opens input stream and getting a messages from client
+		 */
 		public void run() {
 			ObjectInputStream input;
 		
@@ -124,12 +154,14 @@ public class Client {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
     }
-
+	
+	/**
+	 * Close client connection.
+	 */
 	public void tearDown() {
 		try {
 			clientSocket.close();
@@ -137,7 +169,12 @@ public class Client {
 			Log.e(TAG, "Error when closing client socket.");
 		}
 	}
-
+	//TODO move to send thread?
+	/**
+	 * Opens stream and sending packet to client.
+	 * @param packet any serializable object to send
+	 * @throws Exception
+	 */
     private void sendPacket(Object packet) throws Exception{
 		if (out==null){
 				try {
@@ -154,6 +191,11 @@ public class Client {
 		}
 	}
 	
+    /**
+     * Adds object to sending queue
+     * @param packet
+     * @throws Exception
+     */
 	public void send(Object packet) throws Exception{
 		if (mPacketQueue!=null) mPacketQueue.add(packet);
 		else {

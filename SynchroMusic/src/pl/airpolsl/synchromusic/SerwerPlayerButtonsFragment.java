@@ -6,7 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
+/**
+ * Player buttons for server
+ * @author Wojciech
+ *
+ */
 public class SerwerPlayerButtonsFragment extends Fragment {
 
 	public SerwerPlayerButtonsFragment() {

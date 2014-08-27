@@ -6,16 +6,19 @@ import java.net.MulticastSocket;
 
 import android.util.Log;
 
-
+/**
+ * Sends multicast message in separate thread
+ * @author Wojciech
+ *
+ */
 public class PacketUDP implements Runnable
 {
-    MulticastSocket s;
-    DatagramPacket pack;
-    public static final int PORT_NO = 5436;
-    public static final String GROUP_ADDR = "230.123.123.123";
-    public static final int DGRAM_LEN = 1024;
+    private MulticastSocket s;
+    private DatagramPacket pack;
+    private static final int PORT_NO = 5436;
+    private static final String GROUP_ADDR = "230.123.123.123";
     private String data = null;
-    public static final int TIME_TO_LIVE = 2;
+    private static final int TIME_TO_LIVE = 2;
     
     public PacketUDP(String nData)
     {

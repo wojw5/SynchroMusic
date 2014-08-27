@@ -7,15 +7,16 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
+/**
+ * Containg info about app user
+ * @author Wojciech
+ *
+ */
 public class User implements Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -4341181570622075127L;
 	private String name;
-	private String appVersion;
 	private String osVersion;
-	private Long cacheSize;
 	
 	
 	public User(Context context){
