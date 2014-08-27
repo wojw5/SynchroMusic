@@ -69,6 +69,7 @@ public class NSDWiFi implements ConnectivityMethod {
 		catch (IOException e){
 			throw e;
 		}
+		
 	}
 	
 	/**

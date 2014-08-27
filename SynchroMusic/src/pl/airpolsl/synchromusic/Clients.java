@@ -18,4 +18,8 @@ public class Clients {
 		return clients;
 	}
 	
+	public void remove(Client client) {
+		clients.remove(client);
+	}
+	
 }

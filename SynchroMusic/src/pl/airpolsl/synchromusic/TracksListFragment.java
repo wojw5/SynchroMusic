@@ -81,8 +81,11 @@ public class TracksListFragment extends ListFragment {
 			}
 	        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
 	        mediaMetadataRetriever.setDataSource(getActivity(),uri);
-	        Track track = new Track(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE),
-	        		mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST),
+	        String title = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE);
+	        String artist = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+	        if (title==null) title = "Unknown";
+	        if (artist==null) artist = "Unknown";
+	        Track track = new Track(title, artist,
 	        		Long.parseLong(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)),
 	        		fullUri);
 	        tracks.add(track);

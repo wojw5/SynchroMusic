@@ -84,6 +84,12 @@ public class Track implements Serializable {
 		}
 	}
 	
+	public void pause(){
+		if(mediaPlayer!=null && mediaPlayer.isPlaying()) {
+			mediaPlayer.pause();
+		}
+	}
+	
 	
 	public String getTitle()
 	{

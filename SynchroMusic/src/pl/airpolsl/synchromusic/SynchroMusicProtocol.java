@@ -1,7 +1,5 @@
 package pl.airpolsl.synchromusic;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -10,21 +8,18 @@ public class SynchroMusicProtocol {
 	private static final String TAG = "SynchroMusicProtocol";
 	
 	
-	static void sendWelcome(Client client, Context context){
+	static void sendWelcome(Client client, Context context) throws Exception{
 		sendPacket(new WelcomePacket(context), client);
 	};
 	
-	static void sendTrack(Client client, Track track){
+	static void sendTrack(Client client, Track track) throws Exception{
 		sendPacket(new PrepareToReceivePacket(track), client);
 	};
 	
-	static void sendPacket(Packet packet,Client client){
+	static void sendPacket(Packet packet,Client client) throws Exception{
 		client.send(packet);
 	};
 	
-	static void sendFile(File packet,Client client){
-		client.send(packet);
-	};
 	
 	void sendPacket(Packet packet,Clients client){
 		
@@ -35,7 +30,7 @@ public class SynchroMusicProtocol {
 	void receivePing(){
 		
 	};
-	static void processPacket(final Packet packet,Context context,Client from) {
+	static void processPacket(final Packet packet,Context context,Client from) throws Exception {
 		Log.d(TAG, "R: " + packet.toString());
 		
 		if (packet instanceof StartPlayingPacket) {
@@ -80,5 +75,10 @@ public class SynchroMusicProtocol {
 	
 	void sendPacketMulticast(){
 		
+	}
+
+	public static void processUDP(String msg) {
+		if (msg=="play" && !TracksListFragment.tracks.isEmpty())
+			TracksListFragment.tracks.get(0).play();
 	};
 }

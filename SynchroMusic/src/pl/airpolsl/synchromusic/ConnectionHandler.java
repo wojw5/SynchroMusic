@@ -6,7 +6,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 /**
  * Class is responsible for connection. Implements thread for incoming connections.
@@ -15,12 +14,12 @@ import android.util.Log;
  */
 public class ConnectionHandler {
 
-	private Handler handler=null;
 	private ServerSocket serverSocket=null;
 	private Socket clientSocket=null;
 	private Thread serverThread=null;
 	private Client boss=null;
 	private Clients clients=null;
+	//private Thread sendMulticast=null;
 	
 	private Context context;
 	private static final String TAG = "ConnectionHandler";
@@ -33,7 +32,6 @@ public class ConnectionHandler {
 		try {
 			serverSocket = new ServerSocket(0);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		init();
@@ -53,7 +51,11 @@ public class ConnectionHandler {
 	 */
 	public void setBoss(InetAddress address, int port){
 			boss = new Client(address,port,context);
-			SynchroMusicProtocol.sendWelcome(boss, context);
+			try {
+				SynchroMusicProtocol.sendWelcome(boss, context);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 	
 	/**
@@ -61,17 +63,32 @@ public class ConnectionHandler {
 	 * @param packet
 	 */
 	public void sendToBoss(Packet packet){
-		boss.send(packet);
+		try {
+			boss.send(packet);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void sendToClients(Track track){
 		for (Client client : clients.getList()) {
-			SynchroMusicProtocol.sendTrack(client, track);
+			try {
+				SynchroMusicProtocol.sendTrack(client, track);
+			} catch (Exception e) {
+				clients.remove(client);
+				e.printStackTrace();
+			}
 		}
 	}
 	public void sendToClients(Packet packet){
+		// if (packet instanceof StartPlayingPacket) SendMulticast.start(); wait for bugfixes
 		for (Client client : clients.getList()) {
-			SynchroMusicProtocol.sendPacket(packet,client);
+			try {
+				SynchroMusicProtocol.sendPacket(packet,client);
+			} catch (Exception e) {
+				clients.remove(client);
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -79,10 +96,20 @@ public class ConnectionHandler {
 	 * Start server thread
 	 */
 	private void init(){
+		//When UDS will be working (wait for bugfixes?)
+		//WifiManager wifi = (WifiManager)context.getSystemService( Context.WIFI_SERVICE );
+		//if(wifi != null)
+		//{
+		//	WifiManager.MulticastLock lock = wifi.createMulticastLock("WifiDevices");
+		//	lock.acquire();
+		//}
+		
 		Log.d(TAG,"Starting connection handler with server socket: "+ serverSocket.getInetAddress() +":"+serverSocket.getLocalPort());
 		clients = new Clients();
 		serverThread = new Thread(new ServerThread());
 		serverThread.start();
+		//sendMulticast = new Thread(new MultiCastThread());
+		//sendMulticast.start();
 	}
 	
 	public Clients getClients(){
@@ -96,24 +123,18 @@ public class ConnectionHandler {
 	 */
 	private class ServerThread implements Runnable {
 
-        @Override
-        public void run() {
-                
-            while (!Thread.currentThread().isInterrupted()) {
-                Log.d(TAG, "ServerSocket Created, awaiting connection");
-                try {
+		@Override
+		public void run() {
+			while (!Thread.currentThread().isInterrupted()) {
+				Log.d(TAG, "ServerSocket Created, awaiting connection");
+				try {
 					clientSocket=serverSocket.accept();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-                Log.d(TAG, "Connected.");
-                if(boss==null) clients.addNew(new Client(clientSocket,context)); //TODO what with that client? maybe add to clients list.
-                
-                //else
-                
-            }
-        }
-    }
-
+				Log.d(TAG, "Connected.");
+				if(boss==null) clients.addNew(new Client(clientSocket,context));
+			}
+		}
+	}
 }

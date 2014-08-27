@@ -59,16 +59,15 @@ public class Client {
 	
 	private class SendingThread implements Runnable {
 	
-	    
-	    private int QUEUE_CAPACITY = 10;
-	
-	    public SendingThread() {
-	    	mPacketQueue = new ArrayBlockingQueue<Object>(QUEUE_CAPACITY);
-	    }
-	
-	    @Override
-	    public void run() {
-	    	try {
+		private int QUEUE_CAPACITY = 10;
+		
+		public SendingThread() {
+			mPacketQueue = new ArrayBlockingQueue<Object>(QUEUE_CAPACITY);
+		}
+		
+		@Override
+		public void run(){
+			try {
 				if (clientSocket == null) clientSocket = new Socket(address,port);
 				Log.d(TAG,"Sending thread socket created.");
 			} catch (IOException e) {
@@ -85,6 +84,9 @@ public class Client {
 					sendPacket(msg);
 				} catch (InterruptedException ie) {
 					Log.d(TAG, "Message sending loop interrupted, exiting");
+					break;
+				} catch (Exception e) {
+					break;
 				}
 			}
 		}
@@ -117,7 +119,12 @@ public class Client {
 
 			} catch (IOException e) {
 				Log.e(TAG, "Server loop error: ", e);
+				mPacketQueue=null;
+				return;
 			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -131,23 +138,27 @@ public class Client {
 		}
 	}
 
-    private void sendPacket(Object packet) {
+    private void sendPacket(Object packet) throws Exception{
 		if (out==null){
 				try {
 					out = new ObjectOutputStream(clientSocket.getOutputStream());
 				} catch (IOException e) {
-					e.printStackTrace();
+					throw e;
 				}
 		}
 
 		try {
 			out.writeObject(packet);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw e;
 		}
 	}
 	
-	public void send(Object packet){
+	public void send(Object packet) throws Exception{
 		if (mPacketQueue!=null) mPacketQueue.add(packet);
+		else {
+			Log.d(TAG,packet.toString() +" to " + address.getHostAddress());
+			throw new Exception("Link broken");
+		}
 	}
 }
